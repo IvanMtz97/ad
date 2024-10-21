@@ -164,13 +164,29 @@ public OnPlayerCommandText(playerid, cmdtext[])
 	}
 
 	if (strcmp("/infernus", cmdtext, true, 10) == 0) {
-		new Float: x, Float: y, Float: z;
+		new Float: x, Float: y, Float: z, Float: angle;
 		GetPlayerPos(playerid, x, y, z);
-		new vehicleid = CreateVehicle(411, x, y, z, 0.0, 0, 0, 0);
-		SetVehicleParamsForPlayer(vehicleid, playerid, true);
+		GetPlayerFacingAngle(playerid, angle);
+		new vehicleid = CreateVehicle(411, x, y, z, angle, 0, 0, 0);
 		LinkVehicleToInterior(vehicleid, 0);
 		SetVehicleToRespawn(vehicleid);
+		PutPlayerInVehicle(playerid, vehicleid, 0);
 		return 1;
+	}
+
+	if (strcmp("/hydra", cmdtext, true, 10) == 0) {
+		new Float: x, Float: y, Float: z, Float: angle;
+		GetPlayerPos(playerid, x, y, z);
+		GetPlayerFacingAngle(playerid, angle);
+		new vehicleid = CreateVehicle(520, x, y, z, angle, 0, 0, 0);
+		LinkVehicleToInterior(vehicleid, 0);
+		SetVehicleToRespawn(vehicleid);
+		PutPlayerInVehicle(playerid, vehicleid, 0);
+		return 1;
+	}
+
+	if (strcmp("/mysqlid", cmdtext, true, 10) == 0) {
+		printf("MySQL ID: %d", Players[playerid][id]);
 	}
 	return 0;
 }
@@ -366,6 +382,7 @@ public OnCheckSessionLoaded(playerid, race_check) {
 
 	new message[200];
 	if(cache_num_rows() > 0) {
+		cache_get_value_int(0, "id", Players[playerid][id]);
 		cache_get_value(0, "password", Players[playerid][password], 65);
 		cache_get_value(0, "salt", Players[playerid][salt], 17);
 		Players[playerid][Cache_ID] = cache_save();
