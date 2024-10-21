@@ -25,6 +25,7 @@ enum PLAYER {
 	bool: is_logged_in,
 	loggin_attempts,
 	login_timer,
+	vehicle_id,
 }
 new Players[MAX_PLAYERS][PLAYER];
 
@@ -164,6 +165,10 @@ public OnPlayerCommandText(playerid, cmdtext[])
 	}
 
 	if (strcmp("/infernus", cmdtext, true, 10) == 0) {
+		if (Players[playerid][vehicle_id] != 0) {
+			DestroyVehicle(Players[playerid][vehicle_id]);
+		}
+
 		new Float: x, Float: y, Float: z, Float: angle;
 		GetPlayerPos(playerid, x, y, z);
 		GetPlayerFacingAngle(playerid, angle);
@@ -171,10 +176,15 @@ public OnPlayerCommandText(playerid, cmdtext[])
 		LinkVehicleToInterior(vehicleid, 0);
 		SetVehicleToRespawn(vehicleid);
 		PutPlayerInVehicle(playerid, vehicleid, 0);
+		Players[playerid][vehicle_id] = vehicleid;
 		return 1;
 	}
 
 	if (strcmp("/hydra", cmdtext, true, 10) == 0) {
+		if (Players[playerid][vehicle_id] != 0) {
+			DestroyVehicle(Players[playerid][vehicle_id]);
+		}
+
 		new Float: x, Float: y, Float: z, Float: angle;
 		GetPlayerPos(playerid, x, y, z);
 		GetPlayerFacingAngle(playerid, angle);
@@ -182,6 +192,7 @@ public OnPlayerCommandText(playerid, cmdtext[])
 		LinkVehicleToInterior(vehicleid, 0);
 		SetVehicleToRespawn(vehicleid);
 		PutPlayerInVehicle(playerid, vehicleid, 0);
+		Players[playerid][vehicle_id] = vehicleid;
 		return 1;
 	}
 
