@@ -346,7 +346,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case DIALOG_REGISTER: {
 			if (!response) return Kick(playerid);
 
-			if (strlen(inputtext) <= 5 || strlen(inputtext) > 20) return ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, "Registration", "Your password must met the following:\n- Longer than 5 characters\n- Less than 20 characters\nPlease enter your password in the field below:", "Register", "Cancel");
+			if (strlen(inputtext) <= 5 || strlen(inputtext) > 20) return ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, "Regustri", "Tu contrasena debe cumplir lo siguiente:\n- Mas de 5 caracteres\n- Menor a 20 caracteres\nPorfavor ingresa la contrasena:", "Registrarme", "Cancelar");
 
 			for (new i = 0; i < 16; i++) Players[playerid][salt][i] = random(94) + 33;
 			SHA256_PassHash(inputtext, Players[playerid][salt], Players[playerid][password], 65);
@@ -365,7 +365,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 			if (strcmp(hashed_pass, Players[playerid][password]) == 0) {
 				SetPlayerColor(playerid, COLOR_WHITE);
-				SendClientMessage(playerid, COLOR_SUCCESS, "You have been successfully logged in.");
+				SendClientMessage(playerid, COLOR_SUCCESS, "Has ingresado exitosamente.");
 				PlayerPlaySound(playerid, 1138, 0.0, 0.0, 0.0);
 				cache_set_active(Players[playerid][Cache_ID]);
 				cache_delete(Players[playerid][Cache_ID]);
@@ -381,10 +381,10 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				Players[playerid][loggin_attempts]++;
 
 				if (Players[playerid][loggin_attempts] >= 3) {
-					SendClientMessage(playerid, COLOR_ERROR, "You have mistyped your password too often (3 times).");
+					SendClientMessage(playerid, COLOR_ERROR, "Has introducido la contrasena mal repetidas veces (3).");
 					DelayedKick(playerid);
 				} else {
-					ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, "Login", "Wrong password!\nPlease enter your password in the field below:", "Login", "Abort");
+					ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, "Login", "Contrasena incorrecta!\nIngresa la contrasena correcta:", "Login", "Abort");
 				}
 			}
 
@@ -411,12 +411,12 @@ public OnCheckSessionLoaded(playerid, race_check) {
 		cache_get_value_int(0, "skin", Players[playerid][skin]);
 		cache_get_value_int(0, "money", Players[playerid][money]);
 		Players[playerid][Cache_ID] = cache_save();
-		format(message, sizeof message, "This account (%s) is registered. Please login by entering your password in the field below:", Players[playerid][nick]);
-		ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, "Login", message, "Login", "Cancel");
+		format(message, sizeof message, "Esta cuenta (%s) esta registrada. Ingresa la contrasena:", Players[playerid][nick]);
+		ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, "Login", message, "Login", "Cancelar");
 		Players[playerid][login_timer] = SetTimerEx("OnLoginTimeout", SECONDS_TO_LOGIN * 1000, false, "d", playerid);
 	} else {
-		format(message, sizeof message, "Welcome %s, you can register by entering your password in the field below:", Players[playerid][nick]);
-		ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, "Registration", message, "Register", "Cancel");
+		format(message, sizeof message, "Bienvenido %s, ingresa tu contrasena para registrarte:", Players[playerid][nick]);
+		ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, "Registro", message, "Registrarme", "Cancelar");
 	}
 	return 1;
 }
@@ -426,7 +426,7 @@ public OnPlayerRegister(playerid)
 {
 	Players[playerid][id] = cache_insert_id();
 
-	SendClientMessage(playerid, COLOR_SUCCESS, "Registered successfully!");
+	SendClientMessage(playerid, COLOR_SUCCESS, "Registrado exitosamente!");
 	PlayerPlaySound(playerid, 1138, 0.0, 0.0, 0.0);
 
 	Players[playerid][is_logged_in] = true;
@@ -462,14 +462,14 @@ CMD:skin(playerid, params[]) {
 	result = sscanf(params, "n", skinid);
 	if (result == 0) {
 		if (skinid < 0 || skinid > 312) {
-			SendClientMessage(playerid, COLOR_ERROR, "Invalid skin ID, usage: /skin [skinid]");
+			SendClientMessage(playerid, COLOR_ERROR, "Skin invalido, uso: /skin [skinid]");
 			return 1;
 		}
 		Players[playerid][skin] = skinid;
 		SetPlayerSkin(playerid, skinid);
 		UpdatePlayerSkin(playerid, skinid);
 	} else {
-		SendClientMessage(playerid, COLOR_ERROR, "Invalid skin ID, usage: /skin [skinid]");
+		SendClientMessage(playerid, COLOR_ERROR, "Skin invalido, uso: /skin [skinid]");
 	}
 	return 1;
 }
@@ -481,7 +481,7 @@ CMD:dbid(playerid, params[]) {
 
 CMD:rw(playerid, params[]) {
 	if (IsPlayerInAnyVehicle(playerid)) {
-		SendClientMessage(playerid, COLOR_ERROR, "You can't use this command while in a vehicle.");
+		SendClientMessage(playerid, COLOR_ERROR, "No puedes usar este comando en un vehiculo.");
 	} else {
 		ResetPlayerWeapons(playerid);
 		GivePlayerWeapon(playerid, 26, 9999);
@@ -492,7 +492,7 @@ CMD:rw(playerid, params[]) {
 
 CMD:ww(playerid, params[]) {
 	if (IsPlayerInAnyVehicle(playerid)) {
-		SendClientMessage(playerid, COLOR_ERROR, "You can't use this command while in a vehicle.");
+		SendClientMessage(playerid, COLOR_ERROR, "No puedes usar este comando en un vehiculo.");
 	} else {
 		ResetPlayerWeapons(playerid);
 		GivePlayerWeapon(playerid, 24, 9999);
@@ -504,7 +504,7 @@ CMD:ww(playerid, params[]) {
 
 CMD:ww2(playerid, params[]) {
 	if (IsPlayerInAnyVehicle(playerid)) {
-		SendClientMessage(playerid, COLOR_ERROR, "You can't use this command while in a vehicle.");
+		SendClientMessage(playerid, COLOR_ERROR, "No puedes usar este comando en un vehiculo.");
 	} else {
 		ResetPlayerWeapons(playerid);
 		GivePlayerWeapon(playerid, 24, 9999);
@@ -555,18 +555,18 @@ CMD:hydra(playerid, params[]) {
 
 CMD:v(playerid, params[]) {
 	if (Players[playerid][v_timer] != 0) {
-		SendClientMessage(playerid, COLOR_ERROR, "You can't spawn another vehicle yet.");
+		SendClientMessage(playerid, COLOR_ERROR, "Aun no puedes spawnear otro vehiculo.");
 		return 1;
 	}
 	new vehicleId, param[25], result;
 	result = sscanf(params, "s[25]", param);
 	vehicleId = GetVehicleModelIDFromName(param);
 	if (result == -1) {
-		SendClientMessage(playerid, COLOR_ERROR, "Invalid vehicle ID, usage: /v [vehicleid]");
+		SendClientMessage(playerid, COLOR_ERROR, "Nombre de vehiculo invalido, usa: /v [vehicleid]");
 		return 1;
 	}
 	if (vehicleId == 520 || vehicleId == 432 || vehicleId == 476 || vehicleId == 592 || vehicleId == 577 || vehicleId == 425 || vehicleId == 469) {
-		SendClientMessage(playerid, COLOR_ERROR, "You can't spawn this vehicle.");
+		SendClientMessage(playerid, COLOR_ERROR, "No puedes usar este vehiculo.");
 		return 1;
 	}
 
@@ -587,29 +587,32 @@ CMD:v(playerid, params[]) {
 
 CMD:lv(playerid, params[]) {
 	SetPlayerPos(playerid, 2028.619995, 1544.070922, 10.820312);
+	notifyPlayerAction(playerid, "Ha ido a /lv.");
 	return 1;
 }
 
 CMD:sf(playerid, params[]) {
 	SetPlayerPos(playerid, -1969.760986, 294.444641, 35.171875);
+	notifyPlayerAction(playerid, "Ha ido a /sf.");
 	return 1;
 }
 
 CMD:ls(playerid, params[]) {
 	SetPlayerPos(playerid, 2490.676513, -1669.673706, 13.335947);
+	notifyPlayerAction(playerid, "Ha ido a /ls.");
 	return 1;
 }
 
 CMD:fix(playerid, params[]) {
 	if (!IsPlayerInAnyVehicle(playerid)) {
-		SendClientMessage(playerid, COLOR_ERROR, "You are not in a vehicle.");
+		SendClientMessage(playerid, COLOR_ERROR, "No estas en un vehiculo.");
 		return 1;
 	}
 	new playerMoney = GetPlayerMoney(playerid);
 
 	if (playerMoney < VEHICLE_REPAIR_COST) {
 		new message[100];
-		format(message, sizeof message, "You don't have enough money to repair your vehicle. You need $%d.", VEHICLE_REPAIR_COST);
+		format(message, sizeof message, "No tienes suficiente dinero, se necesita $%d.", VEHICLE_REPAIR_COST);
 		SendClientMessage(playerid, COLOR_ERROR, message);
 		return 1;
 	}
@@ -617,17 +620,17 @@ CMD:fix(playerid, params[]) {
 	SetVehicleHealth(playerVehicleId, 1000.0);
 	RepairVehicle(playerVehicleId);
 	GivePlayerMoney(playerid, -VEHICLE_REPAIR_COST);
-	SendClientMessage(playerid, COLOR_SUCCESS, "Your vehicle has been repaired.");
+	SendClientMessage(playerid, COLOR_SUCCESS, "Se ha reparado tu vehiculo.");
 	PlayerPlaySound(playerid, 1133, 0.0, 0.0, 0.0);
 	return 1;
 }
 
-CMD:health(playerid, params[]) {
+CMD:vida(playerid, params[]) {
 	new playerMoney = GetPlayerMoney(playerid);
 	new message[255];
 
 	if (playerMoney < HEALTH_REPAIR_COST) {
-		format(message, sizeof message, "You don't have enough money to repair your health. You need $%d.", HEALTH_REPAIR_COST);
+		format(message, sizeof message, "No tienes suficiente dinero, se necesita $%d.", HEALTH_REPAIR_COST);
 		SendClientMessage(playerid, COLOR_ERROR, message);
 		return 1;
 	}
@@ -635,20 +638,16 @@ CMD:health(playerid, params[]) {
 	SetPlayerHealth(playerid, 100.0);
 	PlayerPlaySound(playerid, 1138, 0.0, 0.0, 0.0);
 	GivePlayerMoney(playerid, -HEALTH_REPAIR_COST);
-	new playerName[200];
-	GetPlayerName(playerid, playerName, sizeof(playerName));
-	format(message, sizeof message, "%s has repaired his health.", playerName);
-	printf("%s", message);
-	SendClientMessageToAll(COLOR_INFO, message);
+	notifyPlayerAction(playerid, "Se ha subido la vida.");
 	return 1;
 }
 
-CMD:armor(playerid, params[]) {
+CMD:chaleco(playerid, params[]) {
 	new playerMoney = GetPlayerMoney(playerid);
 	new message[255];
 
 	if (playerMoney < ARMOR_REPAIR_COST) {
-		format(message, sizeof message, "You don't have enough money to repair your armor. You need $%d.", ARMOR_REPAIR_COST);
+		format(message, sizeof message, "No tienes suficiente dinero, se necesita $%d.", ARMOR_REPAIR_COST);
 		SendClientMessage(playerid, COLOR_ERROR, message);
 		return 1;
 	}
@@ -656,11 +655,7 @@ CMD:armor(playerid, params[]) {
 	SetPlayerArmour(playerid, 100.0);
 	PlayerPlaySound(playerid, 1138, 0.0, 0.0, 0.0);
 	GivePlayerMoney(playerid, -ARMOR_REPAIR_COST);
-	new playerName[200];
-	GetPlayerName(playerid, playerName, sizeof(playerName));
-	format(message, sizeof message, "%s has repaired his armor.", playerName);
-	printf("%s", message);
-	SendClientMessageToAll(COLOR_INFO, message);
+	notifyPlayerAction(playerid, "Se ha subido el chaleco.");
 	return 1;
 }
 
@@ -676,5 +671,14 @@ forward onVTimeout(playerid);
 public onVTimeout(playerid) {
 	KillTimer(Players[playerid][v_timer]);
 	Players[playerid][v_timer] = 0;
+	return 1;
+}
+
+forward notifyPlayerAction(playerid, action[]);
+public notifyPlayerAction(playerid, action[]) {
+	new playerName[200], message[200];
+	GetPlayerName(playerid, playerName, sizeof(playerName));
+	format(message, sizeof message, "%s %s", playerName, action);
+	SendClientMessageToAll(COLOR_INFO, message);
 	return 1;
 }
