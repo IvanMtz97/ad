@@ -3600,3 +3600,465 @@ v0.3.7-R2, (C)2005-2015 SA-MP Team
 [14:26:08] 
 [14:26:08] plugin.mysql: Unloading plugin...
 [14:26:08] plugin.mysql: Plugin unloaded.
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[14:29:08] filterscripts = ""  (string)
+[14:29:08] 
+[14:29:08] Server Plugins
+[14:29:08] --------------
+[14:29:08]  Loading plugin: sscanf
+[14:29:08] 
+[14:29:08]  ===============================
+[14:29:08] 
+[14:29:08]       sscanf plugin loaded.     
+[14:29:08] 
+[14:29:08]          Version: 2.13.8
+[14:29:08] 
+[14:29:08]    (c) 2022 Alex "Y_Less" Cole  
+[14:29:08] 
+[14:29:08]  ===============================
+[14:29:08] 
+[14:29:08]   Loaded.
+[14:29:08]  Loading plugin: mysql
+[14:29:08]  >> plugin.mysql: R41-4 successfully loaded.
+[14:29:08]   Loaded.
+[14:29:08]  Loaded 2 plugins.
+
+[14:29:08] 
+[14:29:08] Filterscripts
+[14:29:08] ---------------
+[14:29:08]   Loaded 0 filterscripts.
+
+[14:29:08] [DB] Connected to database successfully
+[14:29:08] 
+----------------------------------
+[14:29:08]  Blank Gamemode by your name here
+[14:29:08] ----------------------------------
+
+[14:29:08] Number of vehicle models: 0
+[14:29:22] [connection] incoming connection: 127.0.0.1:58993 id: 0
+[14:29:22] [join] JAJA has joined the server (0:127.0.0.1)
+[14:29:22] SELECT * FROM `users` WHERE `nick` = 'JAJA' LIMIT 1
+[14:29:22] OnCheckSessionLoaded
+[14:31:23] Player 0's position: 2028.619995, 1544.070922, 10.820312
+[14:31:25] [part] JAJA has left the server (0:1)
+[14:32:29] --- Server Shutting Down.
+[14:32:29] 
+[14:32:29]  ===============================
+[14:32:29] 
+[14:32:29]      sscanf plugin unloaded.    
+[14:32:29] 
+[14:32:29]  ===============================
+[14:32:29] 
+[14:32:29] plugin.mysql: Unloading plugin...
+[14:32:29] plugin.mysql: Plugin unloaded.
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[14:32:30] filterscripts = ""  (string)
+[14:32:30] 
+[14:32:30] Server Plugins
+[14:32:30] --------------
+[14:32:30]  Loading plugin: sscanf
+[14:32:30] 
+[14:32:30]  ===============================
+[14:32:30] 
+[14:32:30]       sscanf plugin loaded.     
+[14:32:30] 
+[14:32:30]          Version: 2.13.8
+[14:32:30] 
+[14:32:30]    (c) 2022 Alex "Y_Less" Cole  
+[14:32:30] 
+[14:32:30]  ===============================
+[14:32:30] 
+[14:32:30]   Loaded.
+[14:32:30]  Loading plugin: mysql
+[14:32:30]  >> plugin.mysql: R41-4 successfully loaded.
+[14:32:30]   Loaded.
+[14:32:30]  Loaded 2 plugins.
+
+[14:32:30] 
+[14:32:30] Filterscripts
+[14:32:30] ---------------
+[14:32:30]   Loaded 0 filterscripts.
+
+[14:32:30] [DB] Connected to database successfully
+[14:32:30] 
+----------------------------------
+[14:32:30]  Blank Gamemode by your name here
+[14:32:30] ----------------------------------
+
+[14:32:30] Number of vehicle models: 0
+[14:32:47] [connection] incoming connection: 127.0.0.1:55586 id: 0
+[14:32:47] [join] JAJA has joined the server (0:127.0.0.1)
+[14:32:47] SELECT * FROM `users` WHERE `nick` = 'JAJA' LIMIT 1
+[14:32:47] OnCheckSessionLoaded
+[14:34:41] Player 0's position: 2490.676513, -1669.673706, 13.335947
+[14:36:31] Player 0's position: -1969.760986, 294.444641, 35.171875
+[14:36:53] [part] JAJA has left the server (0:1)
+[14:37:43] --- Server Shutting Down.
+[14:37:43] 
+[14:37:43]  ===============================
+[14:37:43] 
+[14:37:43]      sscanf plugin unloaded.    
+[14:37:43] 
+[14:37:43]  ===============================
+[14:37:43] 
+[14:37:43] plugin.mysql: Unloading plugin...
+[14:37:43] plugin.mysql: Plugin unloaded.
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[14:37:45] filterscripts = ""  (string)
+[14:37:45] 
+[14:37:45] Server Plugins
+[14:37:45] --------------
+[14:37:45]  Loading plugin: sscanf
+[14:37:45] 
+[14:37:45]  ===============================
+[14:37:45] 
+[14:37:45]       sscanf plugin loaded.     
+[14:37:45] 
+[14:37:45]          Version: 2.13.8
+[14:37:45] 
+[14:37:45]    (c) 2022 Alex "Y_Less" Cole  
+[14:37:45] 
+[14:37:45]  ===============================
+[14:37:45] 
+[14:37:45]   Loaded.
+[14:37:45]  Loading plugin: mysql
+[14:37:45]  >> plugin.mysql: R41-4 successfully loaded.
+[14:37:45]   Loaded.
+[14:37:45]  Loaded 2 plugins.
+
+[14:37:45] 
+[14:37:45] Filterscripts
+[14:37:45] ---------------
+[14:37:45]   Loaded 0 filterscripts.
+
+[14:37:45] [DB] Connected to database successfully
+[14:37:45] 
+----------------------------------
+[14:37:45]  Blank Gamemode by your name here
+[14:37:45] ----------------------------------
+
+[14:37:45] Number of vehicle models: 0
+[14:38:52] [connection] incoming connection: 127.0.0.1:52078 id: 0
+[14:38:52] [join] JAJA has joined the server (0:127.0.0.1)
+[14:38:52] SELECT * FROM `users` WHERE `nick` = 'JAJA' LIMIT 1
+[14:38:52] OnCheckSessionLoaded
+[14:40:58] [part] JAJA has left the server (0:1)
+[14:52:57] --- Server Shutting Down.
+[14:52:57] 
+[14:52:57]  ===============================
+[14:52:57] 
+[14:52:57]      sscanf plugin unloaded.    
+[14:52:57] 
+[14:52:57]  ===============================
+[14:52:57] 
+[14:52:57] plugin.mysql: Unloading plugin...
+[14:52:57] plugin.mysql: Plugin unloaded.
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[14:52:57] filterscripts = ""  (string)
+[14:52:57] 
+[14:52:57] Server Plugins
+[14:52:57] --------------
+[14:52:57]  Loading plugin: sscanf
+[14:52:57] 
+[14:52:57]  ===============================
+[14:52:57] 
+[14:52:57]       sscanf plugin loaded.     
+[14:52:57] 
+[14:52:57]          Version: 2.13.8
+[14:52:57] 
+[14:52:57]    (c) 2022 Alex "Y_Less" Cole  
+[14:52:57] 
+[14:52:57]  ===============================
+[14:52:57] 
+[14:52:57]   Loaded.
+[14:52:57]  Loading plugin: mysql
+[14:52:57]  >> plugin.mysql: R41-4 successfully loaded.
+[14:52:57]   Loaded.
+[14:52:57]  Loaded 2 plugins.
+
+[14:52:57] 
+[14:52:57] Filterscripts
+[14:52:57] ---------------
+[14:52:57]   Loaded 0 filterscripts.
+
+[14:52:57] [DB] Connected to database successfully
+[14:52:57] 
+----------------------------------
+[14:52:57]  Blank Gamemode by your name here
+[14:52:57] ----------------------------------
+
+[14:52:57] Number of vehicle models: 0
+[14:52:59] --- Server Shutting Down.
+[14:52:59] 
+[14:52:59]  ===============================
+[14:52:59] 
+[14:52:59]      sscanf plugin unloaded.    
+[14:52:59] 
+[14:52:59]  ===============================
+[14:52:59] 
+[14:52:59] plugin.mysql: Unloading plugin...
+[14:52:59] plugin.mysql: Plugin unloaded.
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[14:53:46] filterscripts = ""  (string)
+[14:53:46] 
+[14:53:46] Server Plugins
+[14:53:46] --------------
+[14:53:46]  Loading plugin: sscanf
+[14:53:46] 
+[14:53:46]  ===============================
+[14:53:46] 
+[14:53:46]       sscanf plugin loaded.     
+[14:53:46] 
+[14:53:46]          Version: 2.13.8
+[14:53:46] 
+[14:53:46]    (c) 2022 Alex "Y_Less" Cole  
+[14:53:46] 
+[14:53:46]  ===============================
+[14:53:46] 
+[14:53:46]   Loaded.
+[14:53:46]  Loading plugin: mysql
+[14:53:46]  >> plugin.mysql: R41-4 successfully loaded.
+[14:53:46]   Loaded.
+[14:53:46]  Loaded 2 plugins.
+
+[14:53:46] 
+[14:53:46] Filterscripts
+[14:53:46] ---------------
+[14:53:46]   Loaded 0 filterscripts.
+
+[14:53:46] [DB] Connected to database successfully
+[14:53:46] 
+----------------------------------
+[14:53:46]  Blank Gamemode by your name here
+[14:53:46] ----------------------------------
+
+[14:53:46] Number of vehicle models: 0
+[14:54:01] [connection] incoming connection: 127.0.0.1:54912 id: 0
+[14:54:01] [join] JAJA has joined the server (0:127.0.0.1)
+[14:54:01] SELECT * FROM `users` WHERE `nick` = 'JAJA' LIMIT 1
+[14:54:01] OnCheckSessionLoaded
+[14:54:21] [part] JAJA has left the server (0:1)
+[14:54:30] --- Server Shutting Down.
+[14:54:30] 
+[14:54:30]  ===============================
+[14:54:30] 
+[14:54:30]      sscanf plugin unloaded.    
+[14:54:30] 
+[14:54:30]  ===============================
+[14:54:30] 
+[14:54:30] plugin.mysql: Unloading plugin...
+[14:54:30] plugin.mysql: Plugin unloaded.
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[14:54:31] filterscripts = ""  (string)
+[14:54:31] 
+[14:54:31] Server Plugins
+[14:54:31] --------------
+[14:54:31]  Loading plugin: sscanf
+[14:54:31] 
+[14:54:31]  ===============================
+[14:54:31] 
+[14:54:31]       sscanf plugin loaded.     
+[14:54:31] 
+[14:54:31]          Version: 2.13.8
+[14:54:31] 
+[14:54:31]    (c) 2022 Alex "Y_Less" Cole  
+[14:54:31] 
+[14:54:31]  ===============================
+[14:54:31] 
+[14:54:31]   Loaded.
+[14:54:31]  Loading plugin: mysql
+[14:54:31]  >> plugin.mysql: R41-4 successfully loaded.
+[14:54:31]   Loaded.
+[14:54:31]  Loaded 2 plugins.
+
+[14:54:31] 
+[14:54:31] Filterscripts
+[14:54:31] ---------------
+[14:54:31]   Loaded 0 filterscripts.
+
+[14:54:31] [DB] Connected to database successfully
+[14:54:31] 
+----------------------------------
+[14:54:31]  Blank Gamemode by your name here
+[14:54:31] ----------------------------------
+
+[14:54:31] Number of vehicle models: 0
+[14:54:49] [connection] incoming connection: 127.0.0.1:51397 id: 0
+[14:54:49] [join] JAJA has joined the server (0:127.0.0.1)
+[14:54:49] SELECT * FROM `users` WHERE `nick` = 'JAJA' LIMIT 1
+[14:54:49] OnCheckSessionLoaded
+[14:55:39] [part] JAJA has left the server (0:1)
+[14:56:08] --- Server Shutting Down.
+[14:56:08] 
+[14:56:08]  ===============================
+[14:56:08] 
+[14:56:08]      sscanf plugin unloaded.    
+[14:56:08] 
+[14:56:08]  ===============================
+[14:56:08] 
+[14:56:08] plugin.mysql: Unloading plugin...
+[14:56:08] plugin.mysql: Plugin unloaded.
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[14:56:09] filterscripts = ""  (string)
+[14:56:09] 
+[14:56:09] Server Plugins
+[14:56:09] --------------
+[14:56:09]  Loading plugin: sscanf
+[14:56:09] 
+[14:56:09]  ===============================
+[14:56:09] 
+[14:56:09]       sscanf plugin loaded.     
+[14:56:09] 
+[14:56:09]          Version: 2.13.8
+[14:56:09] 
+[14:56:09]    (c) 2022 Alex "Y_Less" Cole  
+[14:56:09] 
+[14:56:09]  ===============================
+[14:56:09] 
+[14:56:09]   Loaded.
+[14:56:09]  Loading plugin: mysql
+[14:56:09]  >> plugin.mysql: R41-4 successfully loaded.
+[14:56:09]   Loaded.
+[14:56:09]  Loaded 2 plugins.
+
+[14:56:09] 
+[14:56:09] Filterscripts
+[14:56:09] ---------------
+[14:56:09]   Loaded 0 filterscripts.
+
+[14:56:09] [DB] Connected to database successfully
+[14:56:09] 
+----------------------------------
+[14:56:09]  Blank Gamemode by your name here
+[14:56:09] ----------------------------------
+
+[14:56:09] Number of vehicle models: 0
+[14:56:24] [connection] incoming connection: 127.0.0.1:50865 id: 0
+[14:56:24] [join] JAJA has joined the server (0:127.0.0.1)
+[14:56:24] SELECT * FROM `users` WHERE `nick` = 'JAJA' LIMIT 1
+[14:56:24] OnCheckSessionLoaded
+[14:56:54] [part] JAJA has left the server (0:1)
+[14:59:57] --- Server Shutting Down.
+[14:59:57] 
+[14:59:57]  ===============================
+[14:59:57] 
+[14:59:57]      sscanf plugin unloaded.    
+[14:59:57] 
+[14:59:57]  ===============================
+[14:59:57] 
+[14:59:57] plugin.mysql: Unloading plugin...
+[14:59:57] plugin.mysql: Plugin unloaded.
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[14:59:58] filterscripts = ""  (string)
+[14:59:58] 
+[14:59:58] Server Plugins
+[14:59:58] --------------
+[14:59:58]  Loading plugin: sscanf
+[14:59:58] 
+[14:59:58]  ===============================
+[14:59:58] 
+[14:59:58]       sscanf plugin loaded.     
+[14:59:58] 
+[14:59:58]          Version: 2.13.8
+[14:59:58] 
+[14:59:58]    (c) 2022 Alex "Y_Less" Cole  
+[14:59:58] 
+[14:59:58]  ===============================
+[14:59:58] 
+[14:59:58]   Loaded.
+[14:59:58]  Loading plugin: mysql
+[14:59:58]  >> plugin.mysql: R41-4 successfully loaded.
+[14:59:58]   Loaded.
+[14:59:58]  Loaded 2 plugins.
+
+[14:59:58] 
+[14:59:58] Filterscripts
+[14:59:58] ---------------
+[14:59:58]   Loaded 0 filterscripts.
+
+[14:59:58] [DB] Connected to database successfully
+[14:59:58] 
+----------------------------------
+[14:59:58]  Blank Gamemode by your name here
+[14:59:58] ----------------------------------
+
+[14:59:58] Number of vehicle models: 0
+[15:00:18] [connection] incoming connection: 127.0.0.1:59167 id: 0
+[15:00:19] [join] JAJA has joined the server (0:127.0.0.1)
+[15:00:19] SELECT * FROM `users` WHERE `nick` = 'JAJA' LIMIT 1
+[15:00:19] OnCheckSessionLoaded
+[15:01:25] [part] JAJA has left the server (0:1)
+[15:02:10] --- Server Shutting Down.
+[15:02:10] 
+[15:02:10]  ===============================
+[15:02:10] 
+[15:02:10]      sscanf plugin unloaded.    
+[15:02:10] 
+[15:02:10]  ===============================
+[15:02:10] 
+[15:02:10] plugin.mysql: Unloading plugin...
+[15:02:10] plugin.mysql: Plugin unloaded.

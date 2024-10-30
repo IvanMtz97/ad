@@ -10,6 +10,7 @@
 
 #undef	MAX_PLAYERS
 #define MAX_PLAYERS 50
+#define VEHICLE_REPAIR_COST 400
 
 #define MYSQL_HOST "localhost"
 #define MYSQL_USER "root"
@@ -572,6 +573,43 @@ CMD:v(playerid, params[]) {
 	PutPlayerInVehicle(playerid, createdVehicle, 0);
 	Players[playerid][vehicle_id] = createdVehicle;
 	Players[playerid][v_timer] = SetTimerEx("onVTimeout", 3000, false, "d", playerid);
+	return 1;
+}
+
+CMD:lv(playerid, params[]) {
+	SetPlayerPos(playerid, 2028.619995, 1544.070922, 10.820312);
+	return 1;
+}
+
+CMD:sf(playerid, params[]) {
+	SetPlayerPos(playerid, -1969.760986, 294.444641, 35.171875);
+	return 1;
+}
+
+CMD:ls(playerid, params[]) {
+	SetPlayerPos(playerid, 2490.676513, -1669.673706, 13.335947);
+	return 1;
+}
+
+CMD:fix(playerid, params[]) {
+	if (!IsPlayerInAnyVehicle(playerid)) {
+		SendClientMessage(playerid, COLOR_ERROR, "You are not in a vehicle.");
+		return 1;
+	}
+	new playerMoney = GetPlayerMoney(playerid);
+
+	if (playerMoney < VEHICLE_REPAIR_COST) {
+		new message[100];
+		format(message, sizeof message, "You don't have enough money to repair your vehicle. You need $%d.", VEHICLE_REPAIR_COST);
+		SendClientMessage(playerid, COLOR_ERROR, message);
+		return 1;
+	}
+	new playerVehicleId = GetPlayerVehicleID(playerid);
+	SetVehicleHealth(playerVehicleId, 1000.0);
+	RepairVehicle(playerVehicleId);
+	GivePlayerMoney(playerid, -VEHICLE_REPAIR_COST);
+	SendClientMessage(playerid, COLOR_SUCCESS, "Your vehicle has been repaired.");
+	PlayerPlaySound(playerid, 1133, 0.0, 0.0, 0.0);
 	return 1;
 }
 
