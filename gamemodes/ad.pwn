@@ -11,6 +11,8 @@
 #undef	MAX_PLAYERS
 #define MAX_PLAYERS 50
 #define VEHICLE_REPAIR_COST 2000
+#define HEALTH_REPAIR_COST 10000
+#define ARMOR_REPAIR_COST 10000
 
 #define MYSQL_HOST "localhost"
 #define MYSQL_USER "root"
@@ -44,6 +46,7 @@ new Players[MAX_PLAYERS][PLAYER];
 #define COLOR_SIGNED_OUT 0x9b9b9b
 #define COLOR_SUCCESS 0x69ff61AA
 #define COLOR_ERROR 0xff4d4fAA
+#define COLOR_INFO 0xe6e65aAA
 
 #define COLOR_RANK_1 0xFFFFFFFF
 
@@ -616,6 +619,48 @@ CMD:fix(playerid, params[]) {
 	GivePlayerMoney(playerid, -VEHICLE_REPAIR_COST);
 	SendClientMessage(playerid, COLOR_SUCCESS, "Your vehicle has been repaired.");
 	PlayerPlaySound(playerid, 1133, 0.0, 0.0, 0.0);
+	return 1;
+}
+
+CMD:health(playerid, params[]) {
+	new playerMoney = GetPlayerMoney(playerid);
+	new message[255];
+
+	if (playerMoney < HEALTH_REPAIR_COST) {
+		format(message, sizeof message, "You don't have enough money to repair your health. You need $%d.", HEALTH_REPAIR_COST);
+		SendClientMessage(playerid, COLOR_ERROR, message);
+		return 1;
+	}
+
+	SetPlayerHealth(playerid, 100.0);
+	PlayerPlaySound(playerid, 1138, 0.0, 0.0, 0.0);
+	GivePlayerMoney(playerid, -HEALTH_REPAIR_COST);
+	new playerName[200];
+	GetPlayerName(playerid, playerName, sizeof(playerName));
+	format(message, sizeof message, "%s has repaired his health.", playerName);
+	printf("%s", message);
+	SendClientMessageToAll(COLOR_INFO, message);
+	return 1;
+}
+
+CMD:armor(playerid, params[]) {
+	new playerMoney = GetPlayerMoney(playerid);
+	new message[255];
+
+	if (playerMoney < ARMOR_REPAIR_COST) {
+		format(message, sizeof message, "You don't have enough money to repair your armor. You need $%d.", ARMOR_REPAIR_COST);
+		SendClientMessage(playerid, COLOR_ERROR, message);
+		return 1;
+	}
+
+	SetPlayerArmour(playerid, 100.0);
+	PlayerPlaySound(playerid, 1138, 0.0, 0.0, 0.0);
+	GivePlayerMoney(playerid, -ARMOR_REPAIR_COST);
+	new playerName[200];
+	GetPlayerName(playerid, playerName, sizeof(playerName));
+	format(message, sizeof message, "%s has repaired his armor.", playerName);
+	printf("%s", message);
+	SendClientMessageToAll(COLOR_INFO, message);
 	return 1;
 }
 
