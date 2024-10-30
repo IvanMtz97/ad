@@ -10,7 +10,7 @@
 
 #undef	MAX_PLAYERS
 #define MAX_PLAYERS 50
-#define VEHICLE_REPAIR_COST 400
+#define VEHICLE_REPAIR_COST 2000
 
 #define MYSQL_HOST "localhost"
 #define MYSQL_USER "root"
@@ -36,6 +36,7 @@ enum PLAYER {
 	v_timer,
 	vehicle_id,
 	skin,
+	money,
 }
 new Players[MAX_PLAYERS][PLAYER];
 
@@ -161,8 +162,11 @@ public OnPlayerConnect(playerid)
 	return 1;
 }
 
-public OnPlayerDisconnect(playerid, reason)
-{
+public OnPlayerDisconnect(playerid, reason) {
+	new query[500];
+	mysql_format(dbclient, query, sizeof query, "UPDATE users SET money = %d WHERE id = %d;", GetPlayerMoney(playerid), Players[playerid][id]);
+	print(query);
+	mysql_tquery(dbclient, query);
 	return 1;
 }
 
@@ -369,6 +373,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 				SetSpawnInfo(playerid, NO_TEAM, 0, 1958.3783, 1343.1572, 15.3746, 0.0, 0, 0, 0, 0, 0, 0);
 				SpawnPlayer(playerid);
+				GivePlayerMoney(playerid, Players[playerid][money]);
 			} else {
 				Players[playerid][loggin_attempts]++;
 
@@ -401,6 +406,7 @@ public OnCheckSessionLoaded(playerid, race_check) {
 		cache_get_value(0, "password", Players[playerid][password], 65);
 		cache_get_value(0, "salt", Players[playerid][salt], 17);
 		cache_get_value_int(0, "skin", Players[playerid][skin]);
+		cache_get_value_int(0, "money", Players[playerid][money]);
 		Players[playerid][Cache_ID] = cache_save();
 		format(message, sizeof message, "This account (%s) is registered. Please login by entering your password in the field below:", Players[playerid][nick]);
 		ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, "Login", message, "Login", "Cancel");

@@ -4062,3 +4062,195 @@ v0.3.7-R2, (C)2005-2015 SA-MP Team
 [15:02:10] 
 [15:02:10] plugin.mysql: Unloading plugin...
 [15:02:10] plugin.mysql: Plugin unloaded.
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[15:04:48] filterscripts = ""  (string)
+[15:04:48] 
+[15:04:48] Server Plugins
+[15:04:48] --------------
+[15:04:48]  Loading plugin: sscanf
+[15:04:48] 
+[15:04:48]  ===============================
+[15:04:48] 
+[15:04:48]       sscanf plugin loaded.     
+[15:04:48] 
+[15:04:48]          Version: 2.13.8
+[15:04:48] 
+[15:04:48]    (c) 2022 Alex "Y_Less" Cole  
+[15:04:48] 
+[15:04:48]  ===============================
+[15:04:48] 
+[15:04:48]   Loaded.
+[15:04:48]  Loading plugin: mysql
+[15:04:48]  >> plugin.mysql: R41-4 successfully loaded.
+[15:04:48]   Loaded.
+[15:04:48]  Loaded 2 plugins.
+
+[15:04:48] 
+[15:04:48] Filterscripts
+[15:04:48] ---------------
+[15:04:48]   Loaded 0 filterscripts.
+
+[15:04:48] [DB] Connected to database successfully
+[15:04:48] 
+----------------------------------
+[15:04:48]  Blank Gamemode by your name here
+[15:04:48] ----------------------------------
+
+[15:04:48] Number of vehicle models: 0
+[15:05:02] [connection] incoming connection: 127.0.0.1:53964 id: 0
+[15:05:03] [join] DeserT. has joined the server (0:127.0.0.1)
+[15:05:03] SELECT * FROM `users` WHERE `nick` = 'DeserT.' LIMIT 1
+[15:05:03] OnCheckSessionLoaded
+[15:05:23] UPDATE users SET money = 42 WHERE id = 7;
+[15:05:23] [part] DeserT. has left the server (0:1)
+[15:05:41] [connection] incoming connection: 127.0.0.1:61974 id: 0
+[15:05:41] [join] DeserT. has joined the server (0:127.0.0.1)
+[15:05:41] SELECT * FROM `users` WHERE `nick` = 'DeserT.' LIMIT 1
+[15:05:41] OnCheckSessionLoaded
+[15:05:47] UPDATE users SET money = 0 WHERE id = 7;
+[15:05:47] [part] DeserT. has left the server (0:1)
+[15:07:07] --- Server Shutting Down.
+[15:07:07] 
+[15:07:07]  ===============================
+[15:07:07] 
+[15:07:07]      sscanf plugin unloaded.    
+[15:07:07] 
+[15:07:07]  ===============================
+[15:07:07] 
+[15:07:07] plugin.mysql: Unloading plugin...
+[15:07:07] plugin.mysql: Plugin unloaded.
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[15:07:08] filterscripts = ""  (string)
+[15:07:08] 
+[15:07:08] Server Plugins
+[15:07:08] --------------
+[15:07:08]  Loading plugin: sscanf
+[15:07:08] 
+[15:07:08]  ===============================
+[15:07:08] 
+[15:07:08]       sscanf plugin loaded.     
+[15:07:08] 
+[15:07:08]          Version: 2.13.8
+[15:07:08] 
+[15:07:08]    (c) 2022 Alex "Y_Less" Cole  
+[15:07:08] 
+[15:07:08]  ===============================
+[15:07:08] 
+[15:07:08]   Loaded.
+[15:07:08]  Loading plugin: mysql
+[15:07:08]  >> plugin.mysql: R41-4 successfully loaded.
+[15:07:08]   Loaded.
+[15:07:08]  Loaded 2 plugins.
+
+[15:07:08] 
+[15:07:08] Filterscripts
+[15:07:08] ---------------
+[15:07:08]   Loaded 0 filterscripts.
+
+[15:07:08] [DB] Connected to database successfully
+[15:07:08] 
+----------------------------------
+[15:07:08]  Blank Gamemode by your name here
+[15:07:08] ----------------------------------
+
+[15:07:08] Number of vehicle models: 0
+[15:07:23] [connection] incoming connection: 127.0.0.1:52690 id: 0
+[15:07:23] [join] DeserT. has joined the server (0:127.0.0.1)
+[15:07:23] SELECT * FROM `users` WHERE `nick` = 'DeserT.' LIMIT 1
+[15:07:23] OnCheckSessionLoaded
+[15:07:27] Player money 0
+[15:07:46] UPDATE users SET money = 50 WHERE id = 7;
+[15:07:46] [part] DeserT. has left the server (0:1)
+[15:08:30] --- Server Shutting Down.
+[15:08:30] 
+[15:08:30]  ===============================
+[15:08:30] 
+[15:08:30]      sscanf plugin unloaded.    
+[15:08:30] 
+[15:08:30]  ===============================
+[15:08:30] 
+[15:08:30] plugin.mysql: Unloading plugin...
+[15:08:30] plugin.mysql: Plugin unloaded.
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[15:08:31] filterscripts = ""  (string)
+[15:08:31] 
+[15:08:31] Server Plugins
+[15:08:31] --------------
+[15:08:31]  Loading plugin: sscanf
+[15:08:31] 
+[15:08:31]  ===============================
+[15:08:31] 
+[15:08:31]       sscanf plugin loaded.     
+[15:08:31] 
+[15:08:31]          Version: 2.13.8
+[15:08:31] 
+[15:08:31]    (c) 2022 Alex "Y_Less" Cole  
+[15:08:31] 
+[15:08:31]  ===============================
+[15:08:31] 
+[15:08:31]   Loaded.
+[15:08:31]  Loading plugin: mysql
+[15:08:31]  >> plugin.mysql: R41-4 successfully loaded.
+[15:08:31]   Loaded.
+[15:08:31]  Loaded 2 plugins.
+
+[15:08:32] 
+[15:08:32] Filterscripts
+[15:08:32] ---------------
+[15:08:32]   Loaded 0 filterscripts.
+
+[15:08:32] [DB] Connected to database successfully
+[15:08:32] 
+----------------------------------
+[15:08:32]  Blank Gamemode by your name here
+[15:08:32] ----------------------------------
+
+[15:08:32] Number of vehicle models: 0
+[15:08:45] [connection] incoming connection: 127.0.0.1:64085 id: 0
+[15:08:45] [join] DeserT. has joined the server (0:127.0.0.1)
+[15:08:45] SELECT * FROM `users` WHERE `nick` = 'DeserT.' LIMIT 1
+[15:08:45] OnCheckSessionLoaded
+[15:08:49] Player money 50
+[15:09:01] UPDATE users SET money = 1050 WHERE id = 7;
+[15:09:01] [part] DeserT. has left the server (0:1)
+[15:09:20] [connection] incoming connection: 127.0.0.1:58961 id: 0
+[15:09:20] [join] DeserT. has joined the server (0:127.0.0.1)
+[15:09:20] SELECT * FROM `users` WHERE `nick` = 'DeserT.' LIMIT 1
+[15:09:20] OnCheckSessionLoaded
+[15:09:22] Player money 1050
+[15:09:44] UPDATE users SET money = 1118 WHERE id = 7;
+[15:09:44] [part] DeserT. has left the server (0:1)
+[15:10:02] --- Server Shutting Down.
+[15:10:02] 
+[15:10:02]  ===============================
+[15:10:02] 
+[15:10:02]      sscanf plugin unloaded.    
+[15:10:02] 
+[15:10:02]  ===============================
+[15:10:02] 
+[15:10:02] plugin.mysql: Unloading plugin...
+[15:10:02] plugin.mysql: Plugin unloaded.
