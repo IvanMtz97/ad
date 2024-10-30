@@ -1,5 +1,5 @@
 compile:
 	./pawno/pawncc.exe ./gamemodes/ad.pwn
 
-make compile-start:
+make dev:
 	./pawno/pawncc.exe ./gamemodes/ad.pwn && ./samp-server.exe

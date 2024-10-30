@@ -1,5 +1,12 @@
+
+#pragma tabsize 0
 #include <a_samp>
 #include <a_mysql>
+#include <zcmd>
+#include <sscanf2>
+#include <whirlpool>
+
+#include "../include/gl_common.inc"
 
 #undef	MAX_PLAYERS
 #define MAX_PLAYERS 50
@@ -26,6 +33,7 @@ enum PLAYER {
 	loggin_attempts,
 	login_timer,
 	vehicle_id,
+	skin,
 }
 new Players[MAX_PLAYERS][PLAYER];
 
@@ -76,6 +84,7 @@ public OnGameModeInit()
 	new MySQLOpt: option_id = mysql_init_options();
 	mysql_set_option(option_id, AUTO_RECONNECT, true);
 	dbclient = mysql_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_NAME, option_id);
+	UsePlayerPedAnims();
 	if (dbclient == MYSQL_INVALID_HANDLE || mysql_errno(dbclient) != 0) {
 		new db_err_message[128];
 		format(db_err_message, sizeof(db_err_message), "[DB] Error connecting to database: %i", mysql_errno(dbclient));
@@ -130,6 +139,12 @@ public OnPlayerSpawn(playerid)
 	SetPlayerInterior(playerid, 0);
 	SetPlayerPos(playerid, 2496.454101, -1681.430786, 13.351849);
 	SetCameraBehindPlayer(playerid);
+
+	if (Players[playerid][skin] == 0) {
+		SetPlayerSkin(playerid, 4);
+	} else {
+		SetPlayerSkin(playerid, Players[playerid][skin]);
+	}
 	return 1;
 }
 
@@ -155,50 +170,6 @@ public OnPlayerText(playerid, text[])
 
 public OnPlayerCommandText(playerid, cmdtext[])
 {
-	if (strcmp("/pos", cmdtext, true, 10) == 0)
-	{
-		new Float: x, Float: y, Float: z;
-		GetPlayerPos(playerid, x, y, z);
-		printf("Player %d's position: %f, %f, %f", playerid, x, y, z);
-		// Do something here
-		return 1;
-	}
-
-	if (strcmp("/infernus", cmdtext, true, 10) == 0) {
-		if (Players[playerid][vehicle_id] != 0) {
-			DestroyVehicle(Players[playerid][vehicle_id]);
-		}
-
-		new Float: x, Float: y, Float: z, Float: angle;
-		GetPlayerPos(playerid, x, y, z);
-		GetPlayerFacingAngle(playerid, angle);
-		new vehicleid = CreateVehicle(411, x, y, z, angle, 0, 0, 0);
-		LinkVehicleToInterior(vehicleid, 0);
-		SetVehicleToRespawn(vehicleid);
-		PutPlayerInVehicle(playerid, vehicleid, 0);
-		Players[playerid][vehicle_id] = vehicleid;
-		return 1;
-	}
-
-	if (strcmp("/hydra", cmdtext, true, 10) == 0) {
-		if (Players[playerid][vehicle_id] != 0) {
-			DestroyVehicle(Players[playerid][vehicle_id]);
-		}
-
-		new Float: x, Float: y, Float: z, Float: angle;
-		GetPlayerPos(playerid, x, y, z);
-		GetPlayerFacingAngle(playerid, angle);
-		new vehicleid = CreateVehicle(520, x, y, z, angle, 0, 0, 0);
-		LinkVehicleToInterior(vehicleid, 0);
-		SetVehicleToRespawn(vehicleid);
-		PutPlayerInVehicle(playerid, vehicleid, 0);
-		Players[playerid][vehicle_id] = vehicleid;
-		return 1;
-	}
-
-	if (strcmp("/mysqlid", cmdtext, true, 10) == 0) {
-		printf("MySQL ID: %d", Players[playerid][id]);
-	}
 	return 0;
 }
 
@@ -396,6 +367,7 @@ public OnCheckSessionLoaded(playerid, race_check) {
 		cache_get_value_int(0, "id", Players[playerid][id]);
 		cache_get_value(0, "password", Players[playerid][password], 65);
 		cache_get_value(0, "salt", Players[playerid][salt], 17);
+		cache_get_value_int(0, "skin", Players[playerid][skin]);
 		Players[playerid][Cache_ID] = cache_save();
 		format(message, sizeof message, "This account (%s) is registered. Please login by entering your password in the field below:", Players[playerid][nick]);
 		ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, "Login", message, "Login", "Cancel");
@@ -432,5 +404,109 @@ forward _KickPlayerDelayed(playerid);
 public _KickPlayerDelayed(playerid)
 {
 	Kick(playerid);
+	return 1;
+}
+
+forward UpdatePlayerSkin(playerid, skinid);
+public UpdatePlayerSkin(playerid, skinid) {
+	new query[500];
+	mysql_format(dbclient, query, sizeof query, "UPDATE users SET skin = %d WHERE id = %d;", Players[playerid][skin], Players[playerid][id]);
+	print(query);
+	mysql_tquery(dbclient, query);
+}
+
+CMD:skin(playerid, params[]) {
+	new skinid, result;
+	result = sscanf(params, "n", skinid);
+	if (result == 0) {
+		if (skinid < 0 || skinid > 312) {
+			SendClientMessage(playerid, COLOR_ERROR, "Invalid skin ID, usage: /skin [skinid]");
+			return 1;
+		}
+		Players[playerid][skin] = skinid;
+		SetPlayerSkin(playerid, skinid);
+		UpdatePlayerSkin(playerid, skinid);
+	} else {
+		SendClientMessage(playerid, COLOR_ERROR, "Invalid skin ID, usage: /skin [skinid]");
+	}
+	return 1;
+}
+
+CMD:dbid(playerid, params[]) {
+	printf("MySQL id: %d", Players[playerid][id]);
+	return 1;
+}
+
+CMD:rw(playerid, params[]) {
+	if (IsPlayerInAnyVehicle(playerid)) {
+		SendClientMessage(playerid, COLOR_ERROR, "You can't use this command while in a vehicle.");
+	} else {
+		ResetPlayerWeapons(playerid);
+		GivePlayerWeapon(playerid, 26, 9999);
+		GivePlayerWeapon(playerid, 28, 9999);
+	}
+	return 1;
+}
+
+CMD:ww(playerid, params[]) {
+	if (IsPlayerInAnyVehicle(playerid)) {
+		SendClientMessage(playerid, COLOR_ERROR, "You can't use this command while in a vehicle.");
+	} else {
+		ResetPlayerWeapons(playerid);
+		GivePlayerWeapon(playerid, 24, 9999);
+		GivePlayerWeapon(playerid, 25, 9999);
+		GivePlayerWeapon(playerid, 34, 9999);
+	}
+	return 1;
+}
+
+CMD:ww2(playerid, params[]) {
+	if (IsPlayerInAnyVehicle(playerid)) {
+		SendClientMessage(playerid, COLOR_ERROR, "You can't use this command while in a vehicle.");
+	} else {
+		ResetPlayerWeapons(playerid);
+		GivePlayerWeapon(playerid, 24, 9999);
+		GivePlayerWeapon(playerid, 27, 9999);
+		GivePlayerWeapon(playerid, 33, 9999);
+	}
+	return 1;
+}
+
+CMD:pos(playerid, params[]) {
+	new Float: x, Float: y, Float: z;
+	GetPlayerPos(playerid, x, y, z);
+	printf("Player %d's position: %f, %f, %f", playerid, x, y, z);
+	return 1;
+}
+
+CMD:infernus(playerid, params[]) {
+	if (Players[playerid][vehicle_id] != 0) {
+		DestroyVehicle(Players[playerid][vehicle_id]);
+	}
+
+	new Float: x, Float: y, Float: z, Float: angle;
+	GetPlayerPos(playerid, x, y, z);
+	GetPlayerFacingAngle(playerid, angle);
+	new vehicleid = CreateVehicle(411, x, y, z, angle, 0, 0, 0);
+	LinkVehicleToInterior(vehicleid, 0);
+	SetVehicleToRespawn(vehicleid);
+	PutPlayerInVehicle(playerid, vehicleid, 0);
+	Players[playerid][vehicle_id] = vehicleid;
+	return 1;
+}
+
+CMD:hydra(playerid, params[]) {
+	if (Players[playerid][vehicle_id] != 0) {
+		DestroyVehicle(Players[playerid][vehicle_id]);
+	}
+
+	new Float: x, Float: y, Float: z, Float: angle;
+	GetPlayerPos(playerid, x, y, z);
+	GetPlayerFacingAngle(playerid, angle);
+	new vehicleid = CreateVehicle(520, x, y, z, angle, 0, 0, 0);
+	LinkVehicleToInterior(vehicleid, 0);
+	SetVehicleToRespawn(vehicleid);
+	PutPlayerInVehicle(playerid, vehicleid, 0);
+	Players[playerid][vehicle_id] = vehicleid;
 	return 1;
 }
