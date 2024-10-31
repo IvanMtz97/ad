@@ -794,13 +794,14 @@ CMD:pm(playerid, params[]) {
 	return 1;
 }
 
-CMD:blockpms(playerid, params[]) {
+
+CMD:bloquearpms(playerid, params[]) {
 	Players[playerid][blocked_pms] = 1;
 	SendClientMessage(playerid, COLOR_INFO, "Has bloqueado los PMs.");
 	return 1;
 }
 
-CMD:unblockpms(playerid, params[]) {
+CMD:desbloquearpms(playerid, params[]) {
 	Players[playerid][blocked_pms] = 0;
 	SendClientMessage(playerid, COLOR_INFO, "Has desbloqueado los PMs.");
 	return 1;
