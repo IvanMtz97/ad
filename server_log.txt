@@ -7661,3 +7661,241 @@ v0.3.7-R2, (C)2005-2015 SA-MP Team
 [21:17:03] 
 [21:17:03] plugin.mysql: Unloading plugin...
 [21:17:03] plugin.mysql: Plugin unloaded.
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[21:19:28] filterscripts = ""  (string)
+[21:19:28] 
+[21:19:28] Server Plugins
+[21:19:28] --------------
+[21:19:28]  Loading plugin: sscanf
+[21:19:28] 
+[21:19:28]  ===============================
+[21:19:28] 
+[21:19:28]       sscanf plugin loaded.     
+[21:19:28] 
+[21:19:28]          Version: 2.13.8
+[21:19:28] 
+[21:19:28]    (c) 2022 Alex "Y_Less" Cole  
+[21:19:28] 
+[21:19:28]  ===============================
+[21:19:28] 
+[21:19:28]   Loaded.
+[21:19:28]  Loading plugin: mysql
+[21:19:28]  >> plugin.mysql: R41-4 successfully loaded.
+[21:19:28]   Loaded.
+[21:19:28]  Loaded 2 plugins.
+
+[21:19:28] 
+[21:19:28] Filterscripts
+[21:19:28] ---------------
+[21:19:28]   Loaded 0 filterscripts.
+
+[21:19:28] [DB] Connected to database successfully
+[21:19:28] 
+----------------------------------
+[21:19:28]  Blank Gamemode by your name here
+[21:19:28] ----------------------------------
+
+[21:19:28] Number of vehicle models: 0
+[21:19:46] [connection] incoming connection: 127.0.0.1:59375 id: 0
+[21:19:47] [join] DeserT. has joined the server (0:127.0.0.1)
+[21:19:47] SELECT * FROM `users` WHERE `nick` = 'DeserT.' LIMIT 1
+[21:19:47] OnCheckSessionLoaded
+[21:19:49] Spawning player in default zone
+[21:20:00] Spawning player in default zone
+[21:20:11] Spawning player in default zone
+[21:20:18] Spawning player in default zone
+[21:20:27] Spawning player in default zone
+[21:20:31] Spawning player in default zone
+[21:20:35] Spawning player in default zone
+[21:20:38] Spawning player in default zone
+[21:20:48] UPDATE users SET money = 0 WHERE id = 7;
+[21:20:48] [part] DeserT. has left the server (0:1)
+[21:22:03] --- Server Shutting Down.
+[21:22:03] 
+[21:22:03]  ===============================
+[21:22:03] 
+[21:22:03]      sscanf plugin unloaded.    
+[21:22:03] 
+[21:22:03]  ===============================
+[21:22:03] 
+[21:22:03] plugin.mysql: Unloading plugin...
+[21:22:03] plugin.mysql: Plugin unloaded.
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[21:22:05] filterscripts = ""  (string)
+[21:22:05] 
+[21:22:05] Server Plugins
+[21:22:05] --------------
+[21:22:05]  Loading plugin: sscanf
+[21:22:05] 
+[21:22:05]  ===============================
+[21:22:05] 
+[21:22:05]       sscanf plugin loaded.     
+[21:22:05] 
+[21:22:05]          Version: 2.13.8
+[21:22:05] 
+[21:22:05]    (c) 2022 Alex "Y_Less" Cole  
+[21:22:05] 
+[21:22:05]  ===============================
+[21:22:05] 
+[21:22:05]   Loaded.
+[21:22:05]  Loading plugin: mysql
+[21:22:05]  >> plugin.mysql: R41-4 successfully loaded.
+[21:22:05]   Loaded.
+[21:22:05]  Loaded 2 plugins.
+
+[21:22:05] 
+[21:22:05] Filterscripts
+[21:22:05] ---------------
+[21:22:05]   Loaded 0 filterscripts.
+
+[21:22:05] [DB] Connected to database successfully
+[21:22:05] 
+----------------------------------
+[21:22:05]  Blank Gamemode by your name here
+[21:22:05] ----------------------------------
+
+[21:22:05] Number of vehicle models: 0
+[21:23:00] --- Server Shutting Down.
+[21:23:00] 
+[21:23:00]  ===============================
+[21:23:00] 
+[21:23:00]      sscanf plugin unloaded.    
+[21:23:00] 
+[21:23:00]  ===============================
+[21:23:00] 
+[21:23:00] plugin.mysql: Unloading plugin...
+[21:23:00] plugin.mysql: Plugin unloaded.
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[21:23:01] filterscripts = ""  (string)
+[21:23:01] 
+[21:23:01] Server Plugins
+[21:23:01] --------------
+[21:23:01]  Loading plugin: sscanf
+[21:23:01] 
+[21:23:01]  ===============================
+[21:23:01] 
+[21:23:01]       sscanf plugin loaded.     
+[21:23:01] 
+[21:23:01]          Version: 2.13.8
+[21:23:01] 
+[21:23:01]    (c) 2022 Alex "Y_Less" Cole  
+[21:23:01] 
+[21:23:01]  ===============================
+[21:23:01] 
+[21:23:01]   Loaded.
+[21:23:01]  Loading plugin: mysql
+[21:23:01]  >> plugin.mysql: R41-4 successfully loaded.
+[21:23:01]   Loaded.
+[21:23:01]  Loaded 2 plugins.
+
+[21:23:01] 
+[21:23:01] Filterscripts
+[21:23:01] ---------------
+[21:23:01]   Loaded 0 filterscripts.
+
+[21:23:01] [DB] Connected to database successfully
+[21:23:01] 
+----------------------------------
+[21:23:01]  Blank Gamemode by your name here
+[21:23:01] ----------------------------------
+
+[21:23:01] Number of vehicle models: 0
+[21:23:58] [connection] incoming connection: 127.0.0.1:62173 id: 0
+[21:23:58] [join] DeserT. has joined the server (0:127.0.0.1)
+[21:23:58] SELECT * FROM `users` WHERE `nick` = 'DeserT.' LIMIT 1
+[21:23:58] OnCheckSessionLoaded
+[21:24:31] UPDATE users SET money = 0 WHERE id = 7;
+[21:24:31] [part] DeserT. has left the server (0:1)
+[21:24:51] --- Server Shutting Down.
+[21:24:51] 
+[21:24:51]  ===============================
+[21:24:51] 
+[21:24:51]      sscanf plugin unloaded.    
+[21:24:51] 
+[21:24:51]  ===============================
+[21:24:51] 
+[21:24:51] plugin.mysql: Unloading plugin...
+[21:24:51] plugin.mysql: Plugin unloaded.
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[21:24:52] filterscripts = ""  (string)
+[21:24:52] 
+[21:24:52] Server Plugins
+[21:24:52] --------------
+[21:24:52]  Loading plugin: sscanf
+[21:24:52] 
+[21:24:52]  ===============================
+[21:24:52] 
+[21:24:52]       sscanf plugin loaded.     
+[21:24:52] 
+[21:24:52]          Version: 2.13.8
+[21:24:52] 
+[21:24:52]    (c) 2022 Alex "Y_Less" Cole  
+[21:24:52] 
+[21:24:52]  ===============================
+[21:24:52] 
+[21:24:52]   Loaded.
+[21:24:52]  Loading plugin: mysql
+[21:24:52]  >> plugin.mysql: R41-4 successfully loaded.
+[21:24:52]   Loaded.
+[21:24:52]  Loaded 2 plugins.
+
+[21:24:52] 
+[21:24:52] Filterscripts
+[21:24:52] ---------------
+[21:24:52]   Loaded 0 filterscripts.
+
+[21:24:52] [DB] Connected to database successfully
+[21:24:52] 
+----------------------------------
+[21:24:52]  Blank Gamemode by your name here
+[21:24:52] ----------------------------------
+
+[21:24:52] Number of vehicle models: 0
+[21:25:12] [connection] incoming connection: 127.0.0.1:56743 id: 0
+[21:25:12] [join] DeserT. has joined the server (0:127.0.0.1)
+[21:25:12] SELECT * FROM `users` WHERE `nick` = 'DeserT.' LIMIT 1
+[21:25:12] OnCheckSessionLoaded
+[21:26:21] UPDATE users SET money = 0 WHERE id = 7;
+[21:26:21] [part] DeserT. has left the server (0:1)
+[21:26:50] --- Server Shutting Down.
+[21:26:50] 
+[21:26:50]  ===============================
+[21:26:50] 
+[21:26:50]      sscanf plugin unloaded.    
+[21:26:50] 
+[21:26:50]  ===============================
+[21:26:50] 
+[21:26:50] plugin.mysql: Unloading plugin...
+[21:26:50] plugin.mysql: Plugin unloaded.
