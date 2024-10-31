@@ -54,6 +54,11 @@ enum PLAYER {
 	skin,
 	money,
 	minigame[Minigame],
+
+	dmg_td_timer,
+	Text: DMGGivenTD,
+	Float:dmg_given,
+	dmg_given_to,
 }
 new Players[MAX_PLAYERS][PLAYER];
 
@@ -384,6 +389,26 @@ public OnVehicleStreamIn(vehicleid, forplayerid)
 
 public OnVehicleStreamOut(vehicleid, forplayerid)
 {
+	return 1;
+}
+
+public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart) {
+	if (issuerid != INVALID_PLAYER_ID) {
+		PlayerPlaySound(issuerid, 17802, 0, 0, 0);
+		PlayerPlaySound(playerid, 1131, 0, 0, 0);
+		if (Players[issuerid][dmg_given_to] != playerid) {
+			Players[issuerid][dmg_given] = 0;
+		}
+
+		new dmgGivenMessage[100], receiverName[100], weaponName[100];
+		new Float:calculatedAmount = amount + Players[issuerid][dmg_given];
+		Players[issuerid][dmg_given] = calculatedAmount;
+		Players[playerid][dmg_given_to] = playerid;
+		GetPlayerName(playerid, receiverName, MAX_PLAYER_NAME);
+		GetWeaponName(weaponid, weaponName, sizeof(weaponName));
+		format(dmgGivenMessage, sizeof(dmgGivenMessage), "-%.0fHP a %s (%s)", calculatedAmount, receiverName, weaponName);
+		showDmgGivenTdForPlayer(issuerid, dmgGivenMessage);
+	}
 	return 1;
 }
 
@@ -822,14 +847,46 @@ public SpawnPlayerInWwZone(playerid) {
 
 forward SpawnPlayerInNoZone(playerid);
 public SpawnPlayerInNoZone(playerid) {
-		new index = random(sizeof(spawns));
-		SetPlayerPos(playerid, spawns[index][0], spawns[index][1], spawns[index][2]);
-		SetPlayerInterior(playerid, 0);
-		SetPlayerSkin(playerid, Players[playerid][skin]);
-		ResetPlayerWeapons(playerid);
-		GivePlayerWeapon(playerid, 24, 9999);
-		GivePlayerWeapon(playerid, 26, 9999);
-		GivePlayerWeapon(playerid, 28, 9999);
-		GivePlayerWeapon(playerid, 34, 9999);
-		SetCameraBehindPlayer(playerid);
+	new index = random(sizeof(spawns));
+	SetPlayerPos(playerid, spawns[index][0], spawns[index][1], spawns[index][2]);
+	SetPlayerInterior(playerid, 0);
+	SetPlayerSkin(playerid, Players[playerid][skin]);
+	ResetPlayerWeapons(playerid);
+	GivePlayerWeapon(playerid, 24, 9999);
+	GivePlayerWeapon(playerid, 26, 9999);
+	GivePlayerWeapon(playerid, 28, 9999);
+	GivePlayerWeapon(playerid, 31, 9999);
+	GivePlayerWeapon(playerid, 34, 9999);
+	SetCameraBehindPlayer(playerid);
+}
+
+forward clearDmgGivenTd(playerid);
+public clearDmgGivenTd(playerid) {
+	TextDrawHideForPlayer(playerid, Players[playerid][DMGGivenTD]);
+	KillTimer(Players[playerid][dmg_td_timer]);
+	Players[playerid][dmg_td_timer] = 0;
+	Players[playerid][dmg_given] = 0;
+	return 1;
+}
+
+forward showDmgGivenTdForPlayer(playerid, message[]);
+public showDmgGivenTdForPlayer(playerid, message[]) {
+	KillTimer(Players[playerid][dmg_td_timer]);
+	Players[playerid][dmg_td_timer] = SetTimerEx("clearDmgGivenTd", 4000, false, "d", playerid);
+	TextDrawDestroy(Players[playerid][DMGGivenTD]);
+	Players[playerid][DMGGivenTD] = TextDrawCreate(481.000000, 395.000000, "-25HP por X (Y)(Z)");
+	TextDrawFont(Players[playerid][DMGGivenTD], 1);
+	TextDrawLetterSize(Players[playerid][DMGGivenTD], 0.170833, 0.800000);
+	TextDrawTextSize(Players[playerid][DMGGivenTD], 613.000000, 20.000000);
+	TextDrawSetOutline(Players[playerid][DMGGivenTD], 1);
+	TextDrawSetShadow(Players[playerid][DMGGivenTD], 0);
+	TextDrawAlignment(Players[playerid][DMGGivenTD], 1);
+	TextDrawColor(Players[playerid][DMGGivenTD], 16711935);
+	TextDrawBackgroundColor(Players[playerid][DMGGivenTD], 255);
+	TextDrawBoxColor(Players[playerid][DMGGivenTD], 0);
+	TextDrawUseBox(Players[playerid][DMGGivenTD], 1);
+	TextDrawSetProportional(Players[playerid][DMGGivenTD], 1);
+	TextDrawSetSelectable(Players[playerid][DMGGivenTD], 0);
+	TextDrawSetString(Players[playerid][DMGGivenTD], message);
+	TextDrawShowForPlayer(playerid, Players[playerid][DMGGivenTD]);
 }
