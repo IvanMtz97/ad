@@ -10409,3 +10409,132 @@ v0.3.7-R2, (C)2005-2015 SA-MP Team
 [11:09:43] 
 [11:09:43] plugin.mysql: Unloading plugin...
 [11:09:43] plugin.mysql: Plugin unloaded.
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[11:17:45] filterscripts = ""  (string)
+[11:17:45] 
+[11:17:45] Server Plugins
+[11:17:45] --------------
+[11:17:45]  Loading plugin: sscanf
+[11:17:45] 
+[11:17:45]  ===============================
+[11:17:45] 
+[11:17:45]       sscanf plugin loaded.     
+[11:17:45] 
+[11:17:45]          Version: 2.13.8
+[11:17:45] 
+[11:17:45]    (c) 2022 Alex "Y_Less" Cole  
+[11:17:45] 
+[11:17:45]  ===============================
+[11:17:45] 
+[11:17:45]   Loaded.
+[11:17:45]  Loading plugin: mysql
+[11:17:45]  >> plugin.mysql: R41-4 successfully loaded.
+[11:17:45]   Loaded.
+[11:17:45]  Loaded 2 plugins.
+
+[11:17:45] 
+[11:17:45] Filterscripts
+[11:17:45] ---------------
+[11:17:45]   Loaded 0 filterscripts.
+
+[11:17:45] [DB] Connected to database successfully
+[11:17:45] 
+----------------------------------
+[11:17:45]  Blank Gamemode by your name here
+[11:17:45] ----------------------------------
+
+[11:17:45] Number of vehicle models: 0
+[11:18:06] [connection] incoming connection: 127.0.0.1:57677 id: 0
+[11:18:06] [join] DeserT. has joined the server (0:127.0.0.1)
+[11:18:06] SELECT * FROM `users` WHERE `nick` = 'DeserT.' LIMIT 1
+[11:18:06] OnCheckSessionLoaded
+[11:18:19] [connection] incoming connection: 192.168.3.14:60443 id: 1
+[11:18:19] [join] DOBLE_ZETA_ has joined the server (1:192.168.3.14)
+[11:18:19] SELECT * FROM `users` WHERE `nick` = 'DOBLE_ZETA_' LIMIT 1
+[11:18:19] OnCheckSessionLoaded
+[11:19:02] UPDATE users SET money = 0 WHERE id = 7;
+[11:19:02] [part] DeserT. has left the server (0:1)
+[11:19:05] UPDATE users SET money = 0 WHERE id = 10;
+[11:19:05] [part] DOBLE_ZETA_ has left the server (1:1)
+[11:19:50] --- Server Shutting Down.
+[11:19:50] 
+[11:19:50]  ===============================
+[11:19:50] 
+[11:19:50]      sscanf plugin unloaded.    
+[11:19:50] 
+[11:19:50]  ===============================
+[11:19:50] 
+[11:19:50] plugin.mysql: Unloading plugin...
+[11:19:50] plugin.mysql: Plugin unloaded.
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[11:19:51] filterscripts = ""  (string)
+[11:19:51] 
+[11:19:51] Server Plugins
+[11:19:51] --------------
+[11:19:51]  Loading plugin: sscanf
+[11:19:51] 
+[11:19:51]  ===============================
+[11:19:51] 
+[11:19:51]       sscanf plugin loaded.     
+[11:19:51] 
+[11:19:51]          Version: 2.13.8
+[11:19:51] 
+[11:19:51]    (c) 2022 Alex "Y_Less" Cole  
+[11:19:51] 
+[11:19:51]  ===============================
+[11:19:51] 
+[11:19:51]   Loaded.
+[11:19:51]  Loading plugin: mysql
+[11:19:51]  >> plugin.mysql: R41-4 successfully loaded.
+[11:19:51]   Loaded.
+[11:19:51]  Loaded 2 plugins.
+
+[11:19:51] 
+[11:19:51] Filterscripts
+[11:19:51] ---------------
+[11:19:51]   Loaded 0 filterscripts.
+
+[11:19:51] [DB] Connected to database successfully
+[11:19:51] 
+----------------------------------
+[11:19:51]  Blank Gamemode by your name here
+[11:19:51] ----------------------------------
+
+[11:19:51] Number of vehicle models: 0
+[11:20:05] [connection] incoming connection: 127.0.0.1:54600 id: 0
+[11:20:05] [join] DeserT. has joined the server (0:127.0.0.1)
+[11:20:05] SELECT * FROM `users` WHERE `nick` = 'DeserT.' LIMIT 1
+[11:20:05] OnCheckSessionLoaded
+[11:20:18] [connection] incoming connection: 192.168.3.14:57277 id: 1
+[11:20:18] [join] DOBLE_ZETA_ has joined the server (1:192.168.3.14)
+[11:20:18] SELECT * FROM `users` WHERE `nick` = 'DOBLE_ZETA_' LIMIT 1
+[11:20:18] OnCheckSessionLoaded
+[11:21:19] UPDATE users SET money = 0 WHERE id = 7;
+[11:21:19] [part] DeserT. has left the server (0:1)
+[11:21:25] --- Server Shutting Down.
+[11:21:25] [part] DOBLE_ZETA_ has left the server (1:0)
+[11:21:25] 
+[11:21:25]  ===============================
+[11:21:25] 
+[11:21:25]      sscanf plugin unloaded.    
+[11:21:25] 
+[11:21:25]  ===============================
+[11:21:25] 
+[11:21:25] plugin.mysql: Unloading plugin...
+[11:21:25] plugin.mysql: Plugin unloaded.

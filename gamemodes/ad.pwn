@@ -61,6 +61,7 @@ enum PLAYER {
 	dmg_given_to,
 
 	blocked_pms,
+	blocked_goto,
 }
 new Players[MAX_PLAYERS][PLAYER];
 
@@ -451,6 +452,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				Players[playerid][login_timer] = 0;
 				Players[playerid][is_logged_in] = true;
 				Players[playerid][blocked_pms] = 0;
+				Players[playerid][blocked_goto] = 0;
 
 				SetSpawnInfo(playerid, NO_TEAM, 0, 1958.3783, 1343.1572, 15.3746, 0.0, 0, 0, 0, 0, 0, 0);
 				SpawnPlayer(playerid);
@@ -794,6 +796,52 @@ CMD:pm(playerid, params[]) {
 	return 1;
 }
 
+CMD:ir(playerid, params[]) {
+	new targetId, message[255], result;
+	result = sscanf(params, "u", targetId);
+	if (result == 0) {
+		if (IsPlayerConnected(targetId)) {
+			if (playerid != targetId) {
+				if (Players[targetId][blocked_goto] == 0) {
+					new playerName[MAX_PLAYER_NAME], targetName[MAX_PLAYER_NAME], Float: x, Float: y, Float: z;
+					GetPlayerName(targetId, targetName, MAX_PLAYER_NAME);
+					GetPlayerName(playerid, playerName, MAX_PLAYER_NAME);
+					GetPlayerPos(targetId, x, y, z);
+					SetPlayerPos(playerid, x, y, z);
+					
+					format(message, sizeof message, "%s ha ido a tu posicion.", playerName);
+					SendClientMessage(targetId, COLOR_INFO, message);
+					PlayerPlaySound(targetId, 1083, 0.0, 0.0, 0.0);
+
+					format(message, sizeof message, "Has ido a la posicion de %s", targetName);
+					SendClientMessage(playerid, COLOR_INFO, message);
+
+				} else {
+					SendClientMessage(playerid, COLOR_ERROR, "Este jugador esta bloqueado.");
+				}
+			} else {
+				SendClientMessage(playerid, COLOR_ERROR, "No puedes ir a ti mismo.");
+			}
+		} else {
+			SendClientMessage(playerid, COLOR_ERROR, "Este jugador no esta conectado.");
+		}
+	} else {
+		SendClientMessage(playerid, COLOR_ERROR, "Uso: /ir [id]");
+	}
+	return 1;
+}
+
+CMD:bloquear(playerid, params[]) {
+	Players[playerid][blocked_goto] = 1;
+	SendClientMessage(playerid, COLOR_INFO, "Te has bloqueado, ahora nadie podra ir a tu posicion.");
+	return 1;
+}
+
+CMD:desbloquear(playerid, params[]) {
+	Players[playerid][blocked_goto] = 0;
+	SendClientMessage(playerid, COLOR_INFO, "Te has desbloqueado, ahora podran ir a tu posicion.");
+	return 1;
+}
 
 CMD:bloquearpms(playerid, params[]) {
 	Players[playerid][blocked_pms] = 1;
