@@ -830,6 +830,6 @@ public SpawnPlayerInRandomSpawn(playerid) {
 		GivePlayerWeapon(playerid, 24, 9999);
 		GivePlayerWeapon(playerid, 26, 9999);
 		GivePlayerWeapon(playerid, 28, 9999);
-		GivePlayerWeapon(playerid, 33, 9999);
+		GivePlayerWeapon(playerid, 34, 9999);
 		SetCameraBehindPlayer(playerid);
 }
