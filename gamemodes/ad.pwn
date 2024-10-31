@@ -403,11 +403,11 @@ public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart) 
 		if (Players[issuerid][dmg_given_to] != playerid) {
 			Players[issuerid][dmg_given] = 0;
 		}
+		Players[issuerid][dmg_given_to] = playerid;
 
 		new dmgGivenMessage[100], receiverName[100], weaponName[100];
 		new Float:calculatedAmount = amount + Players[issuerid][dmg_given];
 		Players[issuerid][dmg_given] = calculatedAmount;
-		Players[playerid][dmg_given_to] = playerid;
 		GetPlayerName(playerid, receiverName, MAX_PLAYER_NAME);
 		GetWeaponName(weaponid, weaponName, sizeof(weaponName));
 		format(dmgGivenMessage, sizeof(dmgGivenMessage), "-%.0fHP a %s (%s)", calculatedAmount, receiverName, weaponName);
