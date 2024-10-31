@@ -101,6 +101,20 @@ new Float:wwZones[][3] = {
 	{ -1443.694824, 931.948486, 1036.491088 },
 	{ -1463.177368, 935.461730, 1036.595825 }
 };
+new Float:spawns[][3] = {
+	{ 1614.149414, -1256.707641, 17.504936 },
+	{ 1541.425659, -1626.858276, 13.382812 },
+	{ 1198.294067, -925.463500, 43.037166 },
+	{ 2030.931518, 1917.722412, 12.324687 },
+	{ 2162.192626, 2161.357910, 10.820312 },
+	{ 2104.294677, 1017.054199, 10.820312 },
+	{ -2022.167846, -53.404064, 35.354389 },
+	{ -1969.328613, 539.657104, 35.171875 },
+	{ -1754.156494, 955.293395, 24.742187 },
+	{ 2028.619995, 1544.070922, 10.820312 },
+	{ -1969.760986, 294.444641, 35.171875 },
+	{ 2490.676513, -1669.673706, 13.335947 }
+};
 
 #if defined FILTERSCRIPT
 
@@ -215,15 +229,22 @@ public OnPlayerDisconnect(playerid, reason) {
 
 public OnPlayerSpawn(playerid)
 {
-	//  SetSpawnInfo(playerid, 2496.454101, -1681.430786, 13.351849, 0.00, 0.00, 0.00, 0, 0, 0, 0, 0, 0);
-	SetPlayerInterior(playerid, 0);
-	SetPlayerPos(playerid, 2496.454101, -1681.430786, 13.351849);
-	SetCameraBehindPlayer(playerid);
+	if (Players[playerid][minigame] == NO_ZONE) {
+		print("Spawning player in default zone");
+		new randomPos = random(sizeof(spawns));
+		SetPlayerPos(playerid, spawns[randomPos][0], spawns[randomPos][1], spawns[randomPos][2]);
+		SetPlayerInterior(playerid, 0);
+		SetPlayerPos(playerid, 2496.454101, -1681.430786, 13.351849);
+		SetCameraBehindPlayer(playerid);
 
-	if (Players[playerid][skin] == 0) {
-		SetPlayerSkin(playerid, 4);
-	} else {
-		SetPlayerSkin(playerid, Players[playerid][skin]);
+		if (Players[playerid][skin] == 0) {
+			SetPlayerSkin(playerid, 4);
+		} else {
+			SetPlayerSkin(playerid, Players[playerid][skin]);
+		}
+	} else if (Players[playerid][minigame] == WWZONE) {
+		print("Spawning player in wwzone");
+		SpawnPlayerInWwZone(playerid);
 	}
 	return 1;
 }
@@ -709,11 +730,16 @@ CMD:chaleco(playerid, params[]) {
 	return 1;
 }
 
-CMD:salir(playerid, params[]) {
+CMD:kill(playerid, params[]) {
 	if (Players[playerid][minigame] != NO_ZONE) {
 		SendClientMessage(playerid, COLOR_ERROR, "No puedes usar este comando ahora, usa /salir.");
 		return 1;
 	}
+	SetPlayerHealth(playerid, 0.0);
+	return 1;
+}
+
+CMD:salir(playerid, params[]) {
 	Players[playerid][minigame] = NO_ZONE;
 	SetPlayerInterior(0);
 	notifyPlayerAction(playerid, "Ha salido de /zonaww");
@@ -730,13 +756,7 @@ CMD:zonaww(playerid, params[]) {
 	printf("Entrar Minigame: %d", Players[playerid][minigame]);
 	Players[playerid][minigame] = WWZONE;
 	notifyPlayerAction(playerid, "Ha ido a /zonaww");
-	SetPlayerInterior(playerid, 15);
-	new randomPos = random(sizeof(wwZones));
-	SetPlayerPos(playerid, wwZones[randomPos][0], wwZones[randomPos][1], wwZones[randomPos][2]);
-	ResetPlayerWeapons(playerid);
-	GivePlayerWeapon(playerid, 24, 9999);
-	GivePlayerWeapon(playerid, 25, 9999);
-	GivePlayerWeapon(playerid, 34, 9999);
+	SpawnPlayerInWwZone(playerid);
 	return 1;
 }
 
@@ -798,4 +818,17 @@ public notifyPlayerAction(playerid, action[]) {
 stock randomEx(min, max) {
 	new rand = random(max-min)+min;    
 	return rand;
+}
+
+forward SpawnPlayerInWwZone(playerid);
+public SpawnPlayerInWwZone(playerid) {
+	SetPlayerInterior(playerid, 15);
+	new randomPos = random(sizeof(wwZones));
+	SetPlayerPos(playerid, wwZones[randomPos][0], wwZones[randomPos][1], wwZones[randomPos][2]);
+	ResetPlayerWeapons(playerid);
+	GivePlayerWeapon(playerid, 24, 9999);
+	GivePlayerWeapon(playerid, 25, 9999);
+	GivePlayerWeapon(playerid, 34, 9999);
+	SetPlayerSkin(playerid, Players[playerid][skin]);
+	return 1;
 }
