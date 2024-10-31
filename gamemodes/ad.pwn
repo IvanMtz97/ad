@@ -59,6 +59,8 @@ enum PLAYER {
 	Text: DMGGivenTD,
 	Float:dmg_given,
 	dmg_given_to,
+
+	blocked_pms,
 }
 new Players[MAX_PLAYERS][PLAYER];
 
@@ -66,7 +68,8 @@ new Players[MAX_PLAYERS][PLAYER];
 #define COLOR_SIGNED_OUT 0x9b9b9b
 #define COLOR_SUCCESS 0x69ff61AA
 #define COLOR_ERROR 0xff4d4fAA
-#define COLOR_INFO 0xe6e65aAA
+#define COLOR_INFO 0x47a0ffAA
+#define COLOR_PM 0xfff700AA
 
 #define COLOR_RANK_1 0xFFFFFFFF
 
@@ -447,6 +450,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				KillTimer(Players[playerid][login_timer]);
 				Players[playerid][login_timer] = 0;
 				Players[playerid][is_logged_in] = true;
+				Players[playerid][blocked_pms] = 0;
 
 				SetSpawnInfo(playerid, NO_TEAM, 0, 1958.3783, 1343.1572, 15.3746, 0.0, 0, 0, 0, 0, 0, 0);
 				SpawnPlayer(playerid);
@@ -757,6 +761,48 @@ CMD:salir(playerid, params[]) {
 	SetPlayerInterior(0);
 	notifyPlayerAction(playerid, "Ha salido de /zonaww");
 	SpawnPlayer(playerid);
+	return 1;
+}
+
+CMD:pm(playerid, params[]) {
+	new targetId, message[255], result;
+	result = sscanf(params, "us[255]", targetId, message);
+	if (result == 0) {
+		if (IsPlayerConnected(targetId)) {
+			if (targetId != playerid) {
+				if (Players[targetId][blocked_pms] == 0) {
+					new senderName[MAX_PLAYER_NAME], targetName[MAX_PLAYER_NAME], pmMessage[255];
+					GetPlayerName(playerid, senderName, MAX_PLAYER_NAME);
+					GetPlayerName(targetId, targetName, MAX_PLAYER_NAME);
+					format(pmMessage, sizeof pmMessage, "[PM] %s: %s", senderName, message);
+					SendClientMessage(targetId, COLOR_PM, pmMessage);
+					PlayerPlaySound(targetId, 1083, 0.0, 0.0, 0.0);
+					format(pmMessage, sizeof pmMessage, "[PM] -> %s: %s", targetName, message);
+					SendClientMessage(playerid, COLOR_PM, pmMessage);
+				} else {
+					SendClientMessage(playerid, COLOR_ERROR, "Este jugador tiene bloqueados los PMs.");	
+				}
+			} else {
+			SendClientMessage(playerid, COLOR_ERROR, "No puedes enviarte un PM a ti mismo.");
+			}
+		} else {
+			SendClientMessage(playerid, COLOR_ERROR, "Este jugador no esta conectado.");
+		}
+	} else {
+		SendClientMessage(playerid, COLOR_ERROR, "Uso: /pm [id] [mensaje]");
+	}
+	return 1;
+}
+
+CMD:blockpms(playerid, params[]) {
+	Players[playerid][blocked_pms] = 1;
+	SendClientMessage(playerid, COLOR_INFO, "Has bloqueado los PMs.");
+	return 1;
+}
+
+CMD:unblockpms(playerid, params[]) {
+	Players[playerid][blocked_pms] = 0;
+	SendClientMessage(playerid, COLOR_INFO, "Has desbloqueado los PMs.");
 	return 1;
 }
 
