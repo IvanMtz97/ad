@@ -23,6 +23,20 @@
 
 new MySQL: dbclient;
 new g_MysqlRaceCheck[MAX_PLAYERS];
+
+enum {
+	DIALOG_UNUSED,
+	DIALOG_LOGIN,
+	DIALOG_REGISTER,
+};
+
+enum Minigame {
+	NO_ZONE,
+	WWZONE,
+	RWZONE,
+	AD,
+};
+
 enum PLAYER {
 	id,
 	ip[17],
@@ -39,6 +53,7 @@ enum PLAYER {
 	vehicle_id,
 	skin,
 	money,
+	minigame[Minigame],
 }
 new Players[MAX_PLAYERS][PLAYER];
 
@@ -50,13 +65,6 @@ new Players[MAX_PLAYERS][PLAYER];
 
 #define COLOR_RANK_1 0xFFFFFFFF
 
-enum
-{
-	DIALOG_UNUSED,
-
-	DIALOG_LOGIN,
-	DIALOG_REGISTER
-};
 new VehicleNames[212][] = {
 	{"Landstalker"},{"Bravura"},{"Buffalo"},{"Linerunner"},{"Perrenial"},{"Sentinel"},{"Dumper"},
 	{"Firetruck"},{"Trashmaster"},{"Stretch"},{"Manana"},{"Infernus"},{"Voodoo"},{"Pony"},{"Mule"},
@@ -88,7 +96,11 @@ new VehicleNames[212][] = {
 	{"Sadler"},{"Luggage Trailer A"},{"Luggage Trailer B"},{"Stair Trailer"},{"Boxville"},{"Farm Plow"},
 	{"Utility Trailer"}
 };
-
+new Float:wwZones[][3] = {
+	{ -1424.357055, 929.259094, 1036.399169 },
+	{ -1443.694824, 931.948486, 1036.491088 },
+	{ -1463.177368, 935.461730, 1036.595825 }
+};
 
 #if defined FILTERSCRIPT
 
@@ -118,6 +130,34 @@ main()
 
 public OnGameModeInit()
 {
+	// #region ARENA 1
+	CreateObject(987,2631.7000000,1186.4000000,25.9000000,0.0000000,0.0000000,0.0000000);
+	CreateObject(987,2642.8999000,1186.5000000,25.9000000,0.0000000,0.0000000,0.0000000);
+	CreateObject(987,2647.6001000,1186.5000000,25.9000000,0.0000000,0.0000000,0.0000000);
+	CreateObject(987,2631.5000000,1198.5000000,25.9000000,0.0000000,0.0000000,-90.0000000);
+	CreateObject(987,2631.5000000,1209.7000000,25.9000000,0.0000000,0.0000000,-90.0000000);
+	CreateObject(987,2631.5000000,1221.2000000,25.9000000,0.0000000,0.0000000,-90.0000000);
+	CreateObject(987,2631.3000000,1232.7000000,25.9000000,0.0000000,0.0000000,-90.0000000);
+	CreateObject(987,2631.3999000,1235.7000000,25.9000000,0.0000000,0.0000000,-90.0000000);
+	CreateObject(987,2659.0000000,1186.6000000,25.9000000,0.0000000,0.0000000,90.3430000);
+	CreateObject(987,2659.1001000,1198.3000000,25.9000000,0.0000000,0.0000000,91.2780000);
+	CreateObject(987,2659.0000000,1209.8000000,25.9000000,0.0000000,0.0000000,89.4070000);
+	CreateObject(987,2659.1001000,1217.7000000,25.9000000,0.0000000,0.0000000,90.3420000);
+	CreateObject(987,2658.8999000,1223.7000000,25.9000000,0.0000000,0.0000000,90.3420000);
+	CreateObject(987,2631.4004000,1235.7002000,25.9000000,0.0000000,0.0000000,-90.0000000);
+	CreateObject(987,2658.8999000,1235.5000000,25.9000000,0.0000000,0.0000000,-179.8290000);
+	CreateObject(987,2647.8000000,1235.5000000,25.9000000,0.0000000,0.0000000,-179.8300000);
+	CreateObject(987,2643.6001000,1235.4000000,25.9000000,0.0000000,0.0000000,-179.8300000);
+	CreateObject(3819,2625.8999000,1224.1000000,26.9000000,0.0000000,0.0000000,-179.6570000);
+	CreateObject(3819,2625.8999000,1215.6000000,26.9000000,0.0000000,0.0000000,-179.6590000);
+	CreateObject(3819,2626.0000000,1207.0000000,26.9000000,0.0000000,0.0000000,-179.6590000);
+	CreateObject(3819,2626.1001000,1198.5000000,26.9000000,0.0000000,0.0000000,-179.6590000);
+	CreateObject(3819,2664.2000000,1223.0000000,26.9000000,0.0000000,0.0000000,-0.9380000);
+	CreateObject(3819,2664.1001000,1214.3000000,26.9000000,0.0000000,0.0000000,-0.9390000);
+	CreateObject(3819,2663.8999000,1205.9000000,26.9000000,0.0000000,0.0000000,-0.9390000);
+	CreateObject(3819,2663.8999000,1197.3000000,26.9000000,0.0000000,0.0000000,-0.9390000);
+	// #endregion 
+
 	new MySQLOpt: option_id = mysql_init_options();
 	mysql_set_option(option_id, AUTO_RECONNECT, true);
 	dbclient = mysql_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_NAME, option_id);
@@ -130,7 +170,7 @@ public OnGameModeInit()
 	} else {
 		print("[DB] Connected to database successfully");
 	}
-	SetGameModeText("AD v0.1");
+	SetGameModeText("FR/DM/AD");
 	return 1;
 }
 
@@ -480,6 +520,10 @@ CMD:dbid(playerid, params[]) {
 }
 
 CMD:rw(playerid, params[]) {
+	if (Players[playerid][minigame] != NO_ZONE) {
+		SendClientMessage(playerid, COLOR_ERROR, "No puedes usar este comando ahora, usa /salir.");
+		return 1;
+	}
 	if (IsPlayerInAnyVehicle(playerid)) {
 		SendClientMessage(playerid, COLOR_ERROR, "No puedes usar este comando en un vehiculo.");
 	} else {
@@ -491,6 +535,10 @@ CMD:rw(playerid, params[]) {
 }
 
 CMD:ww(playerid, params[]) {
+	if (Players[playerid][minigame] != NO_ZONE) {
+		SendClientMessage(playerid, COLOR_ERROR, "No puedes usar este comando ahora, usa /salir.");
+		return 1;
+	}
 	if (IsPlayerInAnyVehicle(playerid)) {
 		SendClientMessage(playerid, COLOR_ERROR, "No puedes usar este comando en un vehiculo.");
 	} else {
@@ -503,6 +551,10 @@ CMD:ww(playerid, params[]) {
 }
 
 CMD:ww2(playerid, params[]) {
+	if (Players[playerid][minigame] != NO_ZONE) {
+		SendClientMessage(playerid, COLOR_ERROR, "No puedes usar este comando ahora, usa /salir.");
+		return 1;
+	}
 	if (IsPlayerInAnyVehicle(playerid)) {
 		SendClientMessage(playerid, COLOR_ERROR, "No puedes usar este comando en un vehiculo.");
 	} else {
@@ -554,6 +606,10 @@ CMD:hydra(playerid, params[]) {
 }
 
 CMD:v(playerid, params[]) {
+	if (Players[playerid][minigame] != NO_ZONE) {
+		SendClientMessage(playerid, COLOR_ERROR, "No puedes usar este comando ahora, usa /salir.");
+		return 1;
+	}
 	if (Players[playerid][v_timer] != 0) {
 		SendClientMessage(playerid, COLOR_ERROR, "Aun no puedes spawnear otro vehiculo.");
 		return 1;
@@ -585,25 +641,11 @@ CMD:v(playerid, params[]) {
 	return 1;
 }
 
-CMD:lv(playerid, params[]) {
-	SetPlayerPos(playerid, 2028.619995, 1544.070922, 10.820312);
-	notifyPlayerAction(playerid, "Ha ido a /lv.");
-	return 1;
-}
-
-CMD:sf(playerid, params[]) {
-	SetPlayerPos(playerid, -1969.760986, 294.444641, 35.171875);
-	notifyPlayerAction(playerid, "Ha ido a /sf.");
-	return 1;
-}
-
-CMD:ls(playerid, params[]) {
-	SetPlayerPos(playerid, 2490.676513, -1669.673706, 13.335947);
-	notifyPlayerAction(playerid, "Ha ido a /ls.");
-	return 1;
-}
-
 CMD:fix(playerid, params[]) {
+	if (Players[playerid][minigame] != NO_ZONE) {
+		SendClientMessage(playerid, COLOR_ERROR, "No puedes usar este comando ahora, usa /salir.");
+		return 1;
+	}
 	if (!IsPlayerInAnyVehicle(playerid)) {
 		SendClientMessage(playerid, COLOR_ERROR, "No estas en un vehiculo.");
 		return 1;
@@ -626,6 +668,10 @@ CMD:fix(playerid, params[]) {
 }
 
 CMD:vida(playerid, params[]) {
+	if (Players[playerid][minigame] != NO_ZONE) {
+		SendClientMessage(playerid, COLOR_ERROR, "No puedes usar este comando ahora, usa /salir.");
+		return 1;
+	}
 	new playerMoney = GetPlayerMoney(playerid);
 	new message[255];
 
@@ -643,6 +689,10 @@ CMD:vida(playerid, params[]) {
 }
 
 CMD:chaleco(playerid, params[]) {
+	if (Players[playerid][minigame] != NO_ZONE) {
+		SendClientMessage(playerid, COLOR_ERROR, "No puedes usar este comando ahora, usa /salir.");
+		return 1;
+	}
 	new playerMoney = GetPlayerMoney(playerid);
 	new message[255];
 
@@ -658,6 +708,68 @@ CMD:chaleco(playerid, params[]) {
 	notifyPlayerAction(playerid, "Se ha subido el chaleco.");
 	return 1;
 }
+
+CMD:salir(playerid, params[]) {
+	if (Players[playerid][minigame] != NO_ZONE) {
+		SendClientMessage(playerid, COLOR_ERROR, "No puedes usar este comando ahora, usa /salir.");
+		return 1;
+	}
+	Players[playerid][minigame] = NO_ZONE;
+	SetPlayerInterior(0);
+	notifyPlayerAction(playerid, "Ha salido de /zonaww");
+	SpawnPlayer(playerid);
+	return 1;
+}
+
+// #region teleports
+CMD:zonaww(playerid, params[]) {
+	if (Players[playerid][minigame] != NO_ZONE) {
+		SendClientMessage(playerid, COLOR_ERROR, "No puedes usar este comando ahora, usa /salir.");
+		return 1;
+	}
+	printf("Entrar Minigame: %d", Players[playerid][minigame]);
+	Players[playerid][minigame] = WWZONE;
+	notifyPlayerAction(playerid, "Ha ido a /zonaww");
+	SetPlayerInterior(playerid, 15);
+	new randomPos = random(sizeof(wwZones));
+	SetPlayerPos(playerid, wwZones[randomPos][0], wwZones[randomPos][1], wwZones[randomPos][2]);
+	ResetPlayerWeapons(playerid);
+	GivePlayerWeapon(playerid, 24, 9999);
+	GivePlayerWeapon(playerid, 25, 9999);
+	GivePlayerWeapon(playerid, 34, 9999);
+	return 1;
+}
+
+CMD:lv(playerid, params[]) {
+	if (Players[playerid][minigame] != NO_ZONE) {
+		SendClientMessage(playerid, COLOR_ERROR, "No puedes usar este comando ahora, usa /salir.");
+		return 1;
+	}
+	SetPlayerPos(playerid, 2028.619995, 1544.070922, 10.820312);
+	notifyPlayerAction(playerid, "Ha ido a /lv.");
+	return 1;
+}
+
+CMD:sf(playerid, params[]) {
+	if (Players[playerid][minigame] != NO_ZONE) {
+		SendClientMessage(playerid, COLOR_ERROR, "No puedes usar este comando ahora, usa /salir.");
+		return 1;
+	}
+	SetPlayerPos(playerid, -1969.760986, 294.444641, 35.171875);
+	notifyPlayerAction(playerid, "Ha ido a /sf.");
+	return 1;
+}
+
+CMD:ls(playerid, params[]) {
+	if (Players[playerid][minigame] != NO_ZONE) {
+		SendClientMessage(playerid, COLOR_ERROR, "No puedes usar este comando ahora, usa /salir.");
+		return 1;
+	}
+	SetPlayerPos(playerid, 2490.676513, -1669.673706, 13.335947);
+	notifyPlayerAction(playerid, "Ha ido a /ls.");
+	return 1;
+}
+// #endregion
 
 GetVehicleModelIDFromName(vname[]) {
 	for(new i = 0; i < 211; i++) {
@@ -681,4 +793,9 @@ public notifyPlayerAction(playerid, action[]) {
 	format(message, sizeof message, "%s %s", playerName, action);
 	SendClientMessageToAll(COLOR_INFO, message);
 	return 1;
+}
+
+stock randomEx(min, max) {
+	new rand = random(max-min)+min;    
+	return rand;
 }
