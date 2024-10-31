@@ -230,7 +230,7 @@ public OnPlayerDisconnect(playerid, reason) {
 public OnPlayerSpawn(playerid)
 {
 	if (Players[playerid][minigame] == NO_ZONE) {
-		SpawnPlayerInRandomSpawn(playerid);
+		SpawnPlayerInNoZone(playerid);
 	} else if (Players[playerid][minigame] == WWZONE) {
 		SpawnPlayerInWwZone(playerid);
 	}
@@ -820,8 +820,8 @@ public SpawnPlayerInWwZone(playerid) {
 	return 1;
 }
 
-forward SpawnPlayerInRandomSpawn(playerid);
-public SpawnPlayerInRandomSpawn(playerid) {
+forward SpawnPlayerInNoZone(playerid);
+public SpawnPlayerInNoZone(playerid) {
 		new index = random(sizeof(spawns));
 		SetPlayerPos(playerid, spawns[index][0], spawns[index][1], spawns[index][2]);
 		SetPlayerInterior(playerid, 0);
