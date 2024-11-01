@@ -62,6 +62,7 @@ enum PLAYER {
 
 	blocked_pms,
 	blocked_goto,
+	streak,
 }
 new Players[MAX_PLAYERS][PLAYER];
 
@@ -124,6 +125,8 @@ new Float:spawns[][3] = {
 	{ -1969.760986, 294.444641, 35.171875 },
 	{ 2490.676513, -1669.673706, 13.335947 }
 };
+new ArenaOneGateOne;
+new ArenaOneGateTwo
 
 #if defined FILTERSCRIPT
 
@@ -179,6 +182,13 @@ public OnGameModeInit()
 	CreateObject(3819,2664.1001000,1214.3000000,26.9000000,0.0000000,0.0000000,-0.9390000);
 	CreateObject(3819,2663.8999000,1205.9000000,26.9000000,0.0000000,0.0000000,-0.9390000);
 	CreateObject(3819,2663.8999000,1197.3000000,26.9000000,0.0000000,0.0000000,-0.9390000);
+	CreateObject(1337,-1940.7794200,385.3542800,35.8946200,0.0000000,0.0000000,0.0000000);
+	CreateObject(971,2650.5000000,1191.1000000,29.5000000,0.0000000,0.0000000,90.6720000);
+	CreateObject(971,2642.0000000,1190.9000000,29.5000000,0.0000000,0.0000000,-88.8010000);
+	CreateObject(971,2649.3000000,1231.0000000,29.5000000,0.0000000,0.0000000,90.6720000);
+	CreateObject(971,2640.5000000,1230.9000000,29.5000000,0.0000000,0.0000000,90.1700000);
+	ArenaOneGateOne = CreateObject(971,2646.2998000,1195.2002000,29.5000000,0.0000000,0.0000000,0.4280000);
+	ArenaOneGateTwo = CreateObject(971,2644.8999000,1226.6000000,29.5000000,0.0000000,0.0000000,0.0000000);
 	// #endregion 
 
 	new MySQLOpt: option_id = mysql_init_options();
@@ -238,6 +248,7 @@ public OnPlayerDisconnect(playerid, reason) {
 
 public OnPlayerSpawn(playerid)
 {
+	Players[playerid][streak] = 0;
 	if (Players[playerid][minigame] == NO_ZONE) {
 		SpawnPlayerInNoZone(playerid);
 	} else if (Players[playerid][minigame] == WWZONE) {
@@ -248,6 +259,12 @@ public OnPlayerSpawn(playerid)
 
 public OnPlayerDeath(playerid, killerid, reason)
 {
+	Players[playerid][streak]++;
+
+	if (Players[killerid][minigame] == WWZONE) {
+		SetPlayerHealth(killerid, 100.0);
+		SetPlayerArmour(killerid, 100.0);
+	}
 	return 1;
 }
 
@@ -407,10 +424,14 @@ public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart) 
 
 		new dmgGivenMessage[100], receiverName[100], weaponName[100];
 		new Float:calculatedAmount = amount + Players[issuerid][dmg_given];
+		new Float: x, Float: y, Float: z;
+		GetPlayerPos(playerid, x, y, z);
+		new Float:distance = GetPlayerDistanceFromPoint(issuerid, x, y, z);
+		
 		Players[issuerid][dmg_given] = calculatedAmount;
 		GetPlayerName(playerid, receiverName, MAX_PLAYER_NAME);
 		GetWeaponName(weaponid, weaponName, sizeof(weaponName));
-		format(dmgGivenMessage, sizeof(dmgGivenMessage), "-%.0fHP a %s (%s)", calculatedAmount, receiverName, weaponName);
+		format(dmgGivenMessage, sizeof(dmgGivenMessage), "-%.0fHP a %s (%s) a %.0fm", calculatedAmount, receiverName, weaponName, distance);
 		showDmgGivenTdForPlayer(issuerid, dmgGivenMessage);
 	}
 	return 1;
@@ -762,6 +783,7 @@ CMD:salir(playerid, params[]) {
 	Players[playerid][minigame] = NO_ZONE;
 	SetPlayerInterior(0);
 	notifyPlayerAction(playerid, "Ha salido de /zonaww");
+	SetPlayerArmour(playerid, 0.0);
 	SpawnPlayer(playerid);
 	return 1;
 }
@@ -857,13 +879,15 @@ CMD:desbloquearpms(playerid, params[]) {
 
 // #region teleports
 CMD:zonaww(playerid, params[]) {
-	if (Players[playerid][minigame] != NO_ZONE) {
+	if (Players[playerid][minigame] != NO_ZONE || Players[playerid][minigame] == WWZONE) {
 		SendClientMessage(playerid, COLOR_ERROR, "No puedes usar este comando ahora, usa /salir.");
 		return 1;
 	}
 	Players[playerid][minigame] = WWZONE;
 	notifyPlayerAction(playerid, "Ha ido a /zonaww");
 	SpawnPlayerInWwZone(playerid);
+	SetPlayerHealth(playerid, 100.0);
+	SetPlayerArmour(playerid, 100.0);
 	return 1;
 }
 
@@ -894,6 +918,16 @@ CMD:ls(playerid, params[]) {
 	}
 	SetPlayerPos(playerid, 2490.676513, -1669.673706, 13.335947);
 	notifyPlayerAction(playerid, "Ha ido a /ls.");
+	return 1;
+}
+
+CMD:open(playerid, params[]) {
+	openArenaOneGates();
+	return 1;
+}
+
+CMD:close(playerid, params[]) {
+	closeArenaOneGates();
 	return 1;
 }
 // #endregion
@@ -984,4 +1018,16 @@ public showDmgGivenTdForPlayer(playerid, message[]) {
 	TextDrawSetSelectable(Players[playerid][DMGGivenTD], 0);
 	TextDrawSetString(Players[playerid][DMGGivenTD], message);
 	TextDrawShowForPlayer(playerid, Players[playerid][DMGGivenTD]);
+}
+
+forward openArenaOneGates();
+public openArenaOneGates() {
+	MoveObject(ArenaOneGateOne, 2646.3000000, 1195.2000000, 36.6000000, 2, 0.0000000,0.0000000,0.4320000);
+	MoveObject(ArenaOneGateTwo, 2644.9004000, 1226.5996000, 36.6000000, 2, 0.0000000,0.0000000,0.0000000);
+}
+
+forward closeArenaOneGates();
+public closeArenaOneGates() {
+	MoveObject(ArenaOneGateOne, 2646.2998000, 1195.2002000, 29.5000000, 2, 0.0000000,0.0000000,0.4320000);
+	MoveObject(ArenaOneGateTwo, 2644.8999000, 1226.6000000, 29.5000000, 2, 0.0000000,0.0000000,0.0000000);
 }
