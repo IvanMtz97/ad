@@ -35,6 +35,7 @@ enum Minigame {
 	WWZONE,
 	RWZONE,
 	AD,
+	DUEL,
 };
 
 enum PLAYER {
@@ -55,15 +56,20 @@ enum PLAYER {
 	money,
 	minigame[Minigame],
 
-	dmg_td_timer,
+	dmg_given_td_timer,
+	dmg_received_td_timer,
 	Text: DMGGivenTD,
+	Text: DMGReceivedTD,
 	Float:dmg_given,
+	Float:dmg_received,
 	dmg_given_to,
+	dmg_received_from,
 
 	blocked_pms,
 	blocked_goto,
 	streak,
-}
+};
+
 new Players[MAX_PLAYERS][PLAYER];
 
 #define COLOR_WHITE 0xFFFFFFFF
@@ -109,7 +115,12 @@ new VehicleNames[212][] = {
 new Float:wwZones[][3] = {
 	{ -1424.357055, 929.259094, 1036.399169 },
 	{ -1443.694824, 931.948486, 1036.491088 },
-	{ -1463.177368, 935.461730, 1036.595825 }
+	{ -1463.177368, 935.461730, 1036.595825 },
+	{ -1311.567382, 951.553710, 1036.564941 },
+	{ -1283.012695, 1014.890930, 1037.577392 },
+	{ -1347.303833, 1053.358520, 1038.324584 },
+	{ -1452.426879, 1056.182373, 1038.555786 },
+	{ -1516.813964, 1003.334594, 1037.783203 }
 };
 new Float:spawns[][3] = {
 	{ 1614.149414, -1256.707641, 17.504936 },
@@ -126,7 +137,30 @@ new Float:spawns[][3] = {
 	{ 2490.676513, -1669.673706, 13.335947 }
 };
 new ArenaOneGateOne;
-new ArenaOneGateTwo
+new ArenaOneGateTwo;
+new ArenaTwoGateOne;
+new ArenaTwoGateTwo;
+
+
+enum DUEL_ARENA {
+	bool:is_occupied,
+	challenger_id,
+	challenged_id,
+	weapons[3],
+	countdown,
+};
+
+new Float:DuelArenaOneSpawns[2][3] = {
+	{ 2645.735107, 1189.662841, 26.918153 },
+	{ 2644.699951, 1232.247192, 26.918153 },
+};
+
+new Float:DuelArenaTwoSpawns[2][3] = {
+	{ 1901.247070, 1374.817504, 24.718750 },
+	{ 1898.018798, 1316.022460, 24.718750 },
+};
+
+new DuelArenas[2][DUEL_ARENA];
 
 #if defined FILTERSCRIPT
 
@@ -189,7 +223,48 @@ public OnGameModeInit()
 	CreateObject(971,2640.5000000,1230.9000000,29.5000000,0.0000000,0.0000000,90.1700000);
 	ArenaOneGateOne = CreateObject(971,2646.2998000,1195.2002000,29.5000000,0.0000000,0.0000000,0.4280000);
 	ArenaOneGateTwo = CreateObject(971,2644.8999000,1226.6000000,29.5000000,0.0000000,0.0000000,0.0000000);
-	// #endregion 
+	// 2645.735107, 1189.662841, 26.918153
+	// 2644.699951, 1232.247192, 26.918153
+	// #endregion
+
+	// #region ARENA 2
+	CreateObject(985,1912.8000000,1377.5000000,25.4000000,0.0000000,0.0000000,0.0000000);
+	CreateObject(985,1885.3323000,1377.4399000,25.4000000,0.0000000,0.0000000,0.0000000);
+	CreateObject(985,1893.2000000,1377.5000000,25.4000000,0.0000000,0.0000000,0.0000000);
+	CreateObject(985,1901.0000000,1377.5000000,25.4000000,0.0000000,0.0000000,0.0000000);
+	CreateObject(985,1908.8000000,1377.5000000,25.4000000,0.0000000,0.0000000,0.0000000);
+	CreateObject(985,1885.4000000,1313.2000000,25.4000000,0.0000000,0.0000000,0.0000000);
+	CreateObject(985,1893.3000000,1313.2000000,25.4000000,0.0000000,0.0000000,0.0000000);
+	CreateObject(985,1901.2000000,1313.2000000,25.4000000,0.0000000,0.0000000,0.0000000);
+	CreateObject(985,1908.9000000,1313.2000000,25.4000000,0.0000000,0.0000000,0.0000000);
+	CreateObject(985,1912.8000000,1313.2000000,25.4000000,0.0000000,0.0000000,0.0000000);
+	CreateObject(985,1916.7000000,1317.0000000,25.4000000,0.0000000,0.0000000,89.8290000);
+	CreateObject(985,1916.7000000,1324.9000000,25.4000000,0.0030000,-0.9360000,89.8240000);
+	CreateObject(985,1916.7000000,1332.7000000,25.4000000,0.0000000,-0.9390000,89.8240000);
+	CreateObject(985,1916.6000000,1340.5000000,25.4000000,0.0000000,-0.9390000,89.8240000);
+	CreateObject(985,1916.6000000,1348.4000000,25.4000000,0.0000000,-0.9390000,89.8240000);
+	CreateObject(985,1916.6000000,1356.3000000,25.4000000,0.0000000,-0.9390000,89.8240000);
+	CreateObject(985,1916.7000000,1364.1000000,25.4000000,0.0000000,-0.9390000,89.8240000);
+	CreateObject(985,1916.7000000,1371.8000000,25.4000000,0.0000000,-0.9390000,89.8240000);
+	CreateObject(985,1916.6000000,1373.6000000,25.4000000,0.0000000,-0.9390000,87.9530000);
+	CreateObject(985,1881.4000000,1373.6000000,25.4000000,0.0000000,-0.9450000,89.8220000);
+	CreateObject(985,1881.4000000,1365.6000000,25.4000000,0.0000000,-0.9450000,89.8190000);
+	CreateObject(985,1881.4000000,1357.8000000,25.4000000,0.0000000,-0.9450000,89.8190000);
+	CreateObject(985,1881.4000000,1349.9000000,25.4000000,0.0000000,-0.9450000,89.8190000);
+	CreateObject(985,1881.4000000,1342.1000000,25.4000000,0.0000000,-0.9450000,89.8190000);
+	CreateObject(985,1881.5000000,1334.3000000,25.4000000,0.0000000,-0.9450000,89.8190000);
+	CreateObject(985,1881.5000000,1326.5000000,25.4000000,0.0000000,-0.9450000,89.8190000);
+	CreateObject(985,1881.6000000,1318.7000000,25.4000000,0.0000000,-0.9450000,89.8190000);
+	CreateObject(985,1881.4000000,1317.1000000,25.4000000,0.0000000,-0.9450000,89.8190000);
+	CreateObject(985,1901.8000000,1317.1000000,25.4000000,0.0000000,0.0000000,89.8240000);
+	CreateObject(985,1894.0000000,1317.0000000,25.4000000,0.0000000,0.0000000,89.8240000);
+	CreateObject(985,1897.1000000,1373.5000000,25.4000000,0.0000000,-0.9450000,89.8190000);
+	CreateObject(985,1905.1000000,1373.5000000,25.4000000,0.0000000,-0.9450000,89.8190000);
+	ArenaTwoGateOne = CreateObject(985,1897.9000000,1321.0000000,25.4000000,0.0000000,0.0000000,0.0000000);
+	ArenaTwoGateTwo = CreateObject(985,1901.1000000,1369.6000000,25.4000000,0.0000000,0.0000000,0.0000000);
+	// 1901.247070, 1374.817504, 24.718750
+	// 1898.018798, 1316.022460, 24.718750
+	// #endregion
 
 	new MySQLOpt: option_id = mysql_init_options();
 	mysql_set_option(option_id, AUTO_RECONNECT, true);
@@ -204,6 +279,7 @@ public OnGameModeInit()
 		print("[DB] Connected to database successfully");
 	}
 	SetGameModeText("FR/DM/AD");
+	resetArenas();
 	return 1;
 }
 
@@ -228,6 +304,34 @@ public OnPlayerConnect(playerid)
 	static const empty_player[PLAYER];
 	Players[playerid] = empty_player;
 
+	Players[playerid][DMGGivenTD] = TextDrawCreate(481.000000, 395.000000, "");
+	TextDrawFont(Players[playerid][DMGGivenTD], 1);
+	TextDrawLetterSize(Players[playerid][DMGGivenTD], 0.170833, 0.800000);
+	TextDrawTextSize(Players[playerid][DMGGivenTD], 613.000000, 20.000000);
+	TextDrawSetOutline(Players[playerid][DMGGivenTD], 1);
+	TextDrawSetShadow(Players[playerid][DMGGivenTD], 0);
+	TextDrawAlignment(Players[playerid][DMGGivenTD], 1);
+	TextDrawColor(Players[playerid][DMGGivenTD], 16711935);
+	TextDrawBackgroundColor(Players[playerid][DMGGivenTD], 255);
+	TextDrawBoxColor(Players[playerid][DMGGivenTD], 0);
+	TextDrawUseBox(Players[playerid][DMGGivenTD], 1);
+	TextDrawSetProportional(Players[playerid][DMGGivenTD], 1);
+	TextDrawSetSelectable(Players[playerid][DMGGivenTD], 0);
+
+	Players[playerid][DMGReceivedTD] = TextDrawCreate(481.000000, 405.000000, "");
+	TextDrawFont(Players[playerid][DMGReceivedTD], 1);
+	TextDrawLetterSize(Players[playerid][DMGReceivedTD], 0.170833, 0.800000);
+	TextDrawTextSize(Players[playerid][DMGReceivedTD], 613.000000, 20.000000);
+	TextDrawSetOutline(Players[playerid][DMGReceivedTD], 1);
+	TextDrawSetShadow(Players[playerid][DMGReceivedTD], 0);
+	TextDrawAlignment(Players[playerid][DMGReceivedTD], 1);
+	TextDrawColor(Players[playerid][DMGReceivedTD], COLOR_ERROR);
+	TextDrawBackgroundColor(Players[playerid][DMGReceivedTD], 255);
+	TextDrawBoxColor(Players[playerid][DMGReceivedTD], 0);
+	TextDrawUseBox(Players[playerid][DMGReceivedTD], 1);
+	TextDrawSetProportional(Players[playerid][DMGReceivedTD], 1);
+	TextDrawSetSelectable(Players[playerid][DMGReceivedTD], 0);
+
 	GetPlayerName(playerid, Players[playerid][nick], MAX_PLAYER_NAME);
 	GetPlayerIp(playerid, Players[playerid][ip], 16);
 
@@ -243,6 +347,9 @@ public OnPlayerDisconnect(playerid, reason) {
 	mysql_format(dbclient, query, sizeof query, "UPDATE users SET money = %d WHERE id = %d;", GetPlayerMoney(playerid), Players[playerid][id]);
 	print(query);
 	mysql_tquery(dbclient, query);
+	if(Players[playerid][vehicle_id] != 0) {
+		DestroyVehicle(Players[playerid][vehicle_id]);
+	}
 	return 1;
 }
 
@@ -259,6 +366,7 @@ public OnPlayerSpawn(playerid)
 
 public OnPlayerDeath(playerid, killerid, reason)
 {
+	SendDeathMessage(killerid, playerid, reason);
 	Players[playerid][streak]++;
 
 	if (Players[killerid][minigame] == WWZONE) {
@@ -415,23 +523,44 @@ public OnVehicleStreamOut(vehicleid, forplayerid)
 
 public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart) {
 	if (issuerid != INVALID_PLAYER_ID) {
-		PlayerPlaySound(issuerid, 17802, 0, 0, 0);
+		new dmgGivenMessage[255], dmgReceivedMessage[255], receiverName[100], issuerName[100], weaponName[100], Float: receiverHealth, Float: x, Float: y, Float: z;
+
+		GetPlayerHealth(playerid, receiverHealth);
+		GetPlayerPos(playerid, x, y, z);
+		new Float:distance = GetPlayerDistanceFromPoint(issuerid, x, y, z);
+	
 		PlayerPlaySound(playerid, 1131, 0, 0, 0);
+		PlayerPlaySound(issuerid, 17802, 0, 0, 0);
+
+		if (Players[playerid][dmg_received_from] != issuerid) {
+			Players[playerid][dmg_received] = 0;
+		}
+		Players[playerid][dmg_received_from] = issuerid;
+
+		
 		if (Players[issuerid][dmg_given_to] != playerid) {
 			Players[issuerid][dmg_given] = 0;
 		}
 		Players[issuerid][dmg_given_to] = playerid;
 
-		new dmgGivenMessage[100], receiverName[100], weaponName[100];
-		new Float:calculatedAmount = amount + Players[issuerid][dmg_given];
-		new Float: x, Float: y, Float: z;
-		GetPlayerPos(playerid, x, y, z);
-		new Float:distance = GetPlayerDistanceFromPoint(issuerid, x, y, z);
+		new Float:calculatedReceivedAmmount = amount + Players[playerid][dmg_received];
+		new Float:calculatedGivenAmount = amount + Players[issuerid][dmg_given];
+		if ((receiverHealth) < amount) {
+			calculatedReceivedAmmount = Players[playerid][dmg_received] + receiverHealth + 1;
+			calculatedGivenAmount = Players[issuerid][dmg_given] + receiverHealth + 1;
+		}
 		
-		Players[issuerid][dmg_given] = calculatedAmount;
-		GetPlayerName(playerid, receiverName, MAX_PLAYER_NAME);
+		Players[playerid][dmg_received] = calculatedReceivedAmmount;
+		Players[issuerid][dmg_given] = calculatedGivenAmount;
+
+		GetPlayerName(issuerid, issuerName, sizeof issuerName);
+		GetPlayerName(playerid, receiverName, sizeof receiverName);
 		GetWeaponName(weaponid, weaponName, sizeof(weaponName));
-		format(dmgGivenMessage, sizeof(dmgGivenMessage), "-%.0fHP a %s (%s) a %.0fm", calculatedAmount, receiverName, weaponName, distance);
+		
+		format(dmgReceivedMessage, sizeof(dmgReceivedMessage), "-%.0fHP de %s (%s) a %.0fm", calculatedReceivedAmmount, issuerName, weaponName, distance);
+		showDmgReceivedTdForPlayer(playerid, dmgReceivedMessage);
+
+		format(dmgGivenMessage, sizeof(dmgGivenMessage), "-%.0fHP a %s (%s) a %.0fm", calculatedGivenAmount, receiverName, weaponName, distance);
 		showDmgGivenTdForPlayer(issuerid, dmgGivenMessage);
 	}
 	return 1;
@@ -445,7 +574,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case DIALOG_REGISTER: {
 			if (!response) return Kick(playerid);
 
-			if (strlen(inputtext) <= 5 || strlen(inputtext) > 20) return ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, "Regustri", "Tu contrasena debe cumplir lo siguiente:\n- Mas de 5 caracteres\n- Menor a 20 caracteres\nPorfavor ingresa la contrasena:", "Registrarme", "Cancelar");
+			if (strlen(inputtext) <= 5 || strlen(inputtext) > 20) return ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, "Registro", "Tu contrasena debe cumplir lo siguiente:\n- Mas de 5 caracteres\n- Menor a 20 caracteres\nPorfavor ingresa la contrasena:", "Registrarme", "Cancelar");
 
 			for (new i = 0; i < 16; i++) Players[playerid][salt][i] = random(94) + 33;
 			SHA256_PassHash(inputtext, Players[playerid][salt], Players[playerid][password], 65);
@@ -923,11 +1052,67 @@ CMD:ls(playerid, params[]) {
 
 CMD:open(playerid, params[]) {
 	openArenaOneGates();
+	openArenaTwoGates();
 	return 1;
 }
 
 CMD:close(playerid, params[]) {
 	closeArenaOneGates();
+	closeArenaTwoGates();
+	return 1;
+}
+
+CMD:duelo(playerid, params[]) {
+	if (Players[playerid][minigame] != NO_ZONE) {
+		SendClientMessage(playerid, COLOR_ERROR, "No puedes usar este comando ahora, usa /salir.");
+		return 1;
+	}
+
+	new result, challengedId, duelWeapons[25], arenaId, choosenWeapons[25], msg[200], challengedName[MAX_PLAYER_NAME], challengerName[MAX_PLAYER_NAME];
+	printf("Params: %s", params);
+	result = sscanf(params, "uds[25]", challengedId, arenaId, duelWeapons);
+	format(choosenWeapons, sizeof choosenWeapons, "%s", duelWeapons);
+	format(msg, sizeof msg, "Result: %d, challengedId: %d, duelWeapons: %s, sscanfWeapons: %s, arenaId: %d", result, challengedId, choosenWeapons, duelWeapons, arenaId);
+	print(msg);
+	SendClientMessage(playerid, COLOR_INFO, msg);
+
+	if (result != 0) {
+		SendClientMessage(playerid, COLOR_ERROR, "Uso: /duelo [id oponente] [arena (1|2)] [rw|ww|ww2]");
+		return 1;
+	}
+
+	if (challengedId == playerid) {
+		SendClientMessage(playerid, COLOR_ERROR, "No puedes retarte a ti mismo.");
+		return 1;
+	}
+
+	if (!IsPlayerConnected(challengedId)) {
+		SendClientMessage(playerid, COLOR_ERROR, "Este jugador no esta conectado.");
+		return 1;
+	}
+
+	if (strcmp(choosenWeapons, "ww2") && strcmp(choosenWeapons, "ww") && strcmp(choosenWeapons, "rw")) {
+		SendClientMessage(playerid, COLOR_ERROR, "Armas invalidas, usa: rw, ww o ww2.");
+		return 1;
+	}
+
+	if (arenaId != 1 && arenaId != 2) {
+		SendClientMessage(playerid, COLOR_ERROR, "Arena invalida, usa: 1 o 2.");
+		return 1;
+	}
+
+	if (DuelArenas[arenaId - 1][is_occupied]) {
+		SendClientMessage(playerid, COLOR_ERROR, "Esta arena esta ocupada.");
+		return 1;
+	}
+	GetPlayerName(challengedId, challengedName, sizeof challengedName);
+	GetPlayerName(playerid, challengerName, sizeof challengerName);
+	format(msg, sizeof msg, "Has retado a un duelo a %s.", challengedName);
+	SendClientMessage(playerid, COLOR_INFO, msg);
+	
+	format(msg, sizeof msg, "%s te ha retado a un duelo. usa /aceptar duelo para comenzar el duelo.", challengerName);
+	SendClientMessage(challengedId, COLOR_INFO, msg);
+	PlayerPlaySound(challengedId, 1138, 0.0, 0.0, 0.0);
 	return 1;
 }
 // #endregion
@@ -971,6 +1156,7 @@ public SpawnPlayerInWwZone(playerid) {
 	GivePlayerWeapon(playerid, 25, 9999);
 	GivePlayerWeapon(playerid, 34, 9999);
 	SetPlayerSkin(playerid, Players[playerid][skin]);
+	SetPlayerArmour(playerid, 100.0);
 	return 1;
 }
 
@@ -987,47 +1173,85 @@ public SpawnPlayerInNoZone(playerid) {
 	GivePlayerWeapon(playerid, 31, 9999);
 	GivePlayerWeapon(playerid, 34, 9999);
 	SetCameraBehindPlayer(playerid);
+	return 1;
 }
 
 forward clearDmgGivenTd(playerid);
 public clearDmgGivenTd(playerid) {
 	TextDrawHideForPlayer(playerid, Players[playerid][DMGGivenTD]);
-	KillTimer(Players[playerid][dmg_td_timer]);
-	Players[playerid][dmg_td_timer] = 0;
+	Players[playerid][dmg_given_td_timer] = 0;
 	Players[playerid][dmg_given] = 0;
+	KillTimer(Players[playerid][dmg_given_td_timer]);
+	return 1;
+}
+
+forward clearDmgReceivedTd(playerid);
+public clearDmgReceivedTd(playerid) {
+	TextDrawHideForPlayer(playerid, Players[playerid][DMGReceivedTD]);
+	Players[playerid][dmg_received_td_timer] = 0;
+	Players[playerid][dmg_received] = 0;
+	KillTimer(Players[playerid][dmg_received_td_timer]);
 	return 1;
 }
 
 forward showDmgGivenTdForPlayer(playerid, message[]);
 public showDmgGivenTdForPlayer(playerid, message[]) {
-	KillTimer(Players[playerid][dmg_td_timer]);
-	Players[playerid][dmg_td_timer] = SetTimerEx("clearDmgGivenTd", 4000, false, "d", playerid);
-	TextDrawDestroy(Players[playerid][DMGGivenTD]);
-	Players[playerid][DMGGivenTD] = TextDrawCreate(481.000000, 395.000000, "-25HP por X (Y)(Z)");
-	TextDrawFont(Players[playerid][DMGGivenTD], 1);
-	TextDrawLetterSize(Players[playerid][DMGGivenTD], 0.170833, 0.800000);
-	TextDrawTextSize(Players[playerid][DMGGivenTD], 613.000000, 20.000000);
-	TextDrawSetOutline(Players[playerid][DMGGivenTD], 1);
-	TextDrawSetShadow(Players[playerid][DMGGivenTD], 0);
-	TextDrawAlignment(Players[playerid][DMGGivenTD], 1);
-	TextDrawColor(Players[playerid][DMGGivenTD], 16711935);
-	TextDrawBackgroundColor(Players[playerid][DMGGivenTD], 255);
-	TextDrawBoxColor(Players[playerid][DMGGivenTD], 0);
-	TextDrawUseBox(Players[playerid][DMGGivenTD], 1);
-	TextDrawSetProportional(Players[playerid][DMGGivenTD], 1);
-	TextDrawSetSelectable(Players[playerid][DMGGivenTD], 0);
+	KillTimer(Players[playerid][dmg_given_td_timer]);
+	Players[playerid][dmg_given_td_timer] = SetTimerEx("clearDmgGivenTd", 4000, false, "d", playerid);
 	TextDrawSetString(Players[playerid][DMGGivenTD], message);
 	TextDrawShowForPlayer(playerid, Players[playerid][DMGGivenTD]);
+	return 1;
+}
+
+forward showDmgReceivedTdForPlayer(playerid, message[]);
+public showDmgReceivedTdForPlayer(playerid, message[]) {
+	KillTimer(Players[playerid][dmg_received_td_timer]);
+	Players[playerid][dmg_received_td_timer] = SetTimerEx("clearDmgReceivedTd", 4000, false, "d", playerid);
+	TextDrawSetString(Players[playerid][DMGReceivedTD], message);
+	TextDrawShowForPlayer(playerid, Players[playerid][DMGReceivedTD]);
+	return 1;
 }
 
 forward openArenaOneGates();
 public openArenaOneGates() {
 	MoveObject(ArenaOneGateOne, 2646.3000000, 1195.2000000, 36.6000000, 2, 0.0000000,0.0000000,0.4320000);
 	MoveObject(ArenaOneGateTwo, 2644.9004000, 1226.5996000, 36.6000000, 2, 0.0000000,0.0000000,0.0000000);
+	return 1;
 }
 
 forward closeArenaOneGates();
 public closeArenaOneGates() {
 	MoveObject(ArenaOneGateOne, 2646.2998000, 1195.2002000, 29.5000000, 2, 0.0000000,0.0000000,0.4320000);
 	MoveObject(ArenaOneGateTwo, 2644.8999000, 1226.6000000, 29.5000000, 2, 0.0000000,0.0000000,0.0000000);
+	return 1;
+}
+
+forward openArenaTwoGates();
+public openArenaTwoGates() {
+	MoveObject(ArenaTwoGateOne, 1897.9004000, 1321.0000000, 31.4000000, 2, 0.0000000,0.0000000,0.4320000);
+	MoveObject(ArenaTwoGateTwo, 1901.0996000, 1369.5996000, 31.4000000, 2, 0.0000000,0.0000000,0.0000000);
+	return 1;
+}
+
+forward closeArenaTwoGates();
+public closeArenaTwoGates() {
+	MoveObject(ArenaTwoGateOne, 1897.9000000, 1321.0000000, 25.4000000, 2, 0.0000000,0.0000000,0.4320000);
+	MoveObject(ArenaTwoGateTwo, 1901.1000000, 1369.6000000, 25.4000000, 2, 0.0000000,0.0000000,0.0000000);
+	return 1;
+}
+
+forward resetArenas();
+public resetArenas() {
+	clearArena(0);
+	clearArena(1);
+	return 1;
+}
+
+forward clearArena(arenaId);
+public clearArena(arenaId) {
+	DuelArenas[arenaId][is_occupied] = false;
+	DuelArenas[arenaId][challenger_id] = INVALID_PLAYER_ID;
+	DuelArenas[arenaId][challenged_id] = INVALID_PLAYER_ID;
+	DuelArenas[arenaId][countdown] = 0;
+	return 1;
 }
